@@ -42,7 +42,7 @@ import (
 	"fmt"
 	"hash"
 
-	ethcrypto "github.com/justitia/wallet/crypto"
+	ethcrypto "github.com/DSiSc/wallet/crypto"
 )
 
 var (

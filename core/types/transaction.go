@@ -23,9 +23,9 @@ import (
 	"math/big"
 	"sync/atomic"
 
-	"github.com/justitia/wallet/common"
-	"github.com/justitia/wallet/common/hexutil"
-	"github.com/justitia/wallet/crypto"
+	"github.com/DSiSc/wallet/common"
+	"github.com/DSiSc/wallet/common/hexutil"
+	"github.com/DSiSc/wallet/crypto"
 	"github.com/ethereum/go-ethereum/rlp"
 )
 

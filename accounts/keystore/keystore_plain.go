@@ -22,7 +22,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/justitia/wallet/common"
+	"github.com/DSiSc/wallet/common"
 )
 
 type keyStorePlain struct {

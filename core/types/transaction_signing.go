@@ -22,8 +22,8 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/justitia/wallet/common"
-	"github.com/justitia/wallet/crypto"
+	"github.com/DSiSc/wallet/common"
+	"github.com/DSiSc/wallet/crypto"
 	"github.com/ethereum/go-ethereum/params"
 )
 

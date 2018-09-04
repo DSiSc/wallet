@@ -40,7 +40,7 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/justitia/wallet/crypto"
+	"github.com/DSiSc/wallet/crypto"
 )
 
 var dumpEnc bool

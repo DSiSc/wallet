@@ -29,8 +29,8 @@ import (
 
 	"github.com/cespare/cp"
 	"github.com/davecgh/go-spew/spew"
-	"github.com/justitia/wallet/accounts"
-	"github.com/justitia/wallet/common"
+	"github.com/DSiSc/wallet/accounts"
+	"github.com/DSiSc/wallet/common"
 )
 
 var (

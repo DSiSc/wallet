@@ -36,7 +36,7 @@ import (
 	"math/big"
 	"unsafe"
 
-	"github.com/justitia/wallet/common/math"
+	"github.com/DSiSc/wallet/common/math"
 )
 
 /*

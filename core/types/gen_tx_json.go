@@ -7,8 +7,8 @@ import (
 	"errors"
 	"math/big"
 
-	"github.com/justitia/wallet/common"
-	"github.com/justitia/wallet/common/hexutil"
+	"github.com/DSiSc/wallet/common"
+	"github.com/DSiSc/wallet/common/hexutil"
 )
 
 var _ = (*txdataMarshaling)(nil)

@@ -20,8 +20,8 @@ import (
 	"math/big"
 
 //	ethereum "github.com/ethereum/go-ethereum"
-	"github.com/justitia/wallet/accounts"
-	"github.com/justitia/wallet/core/types"
+	"github.com/DSiSc/wallet/accounts"
+	"github.com/DSiSc/wallet/core/types"
 )
 
 // keystoreWallet implements the accounts.Wallet interface for the original

@@ -25,8 +25,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/justitia/wallet/accounts"
-	"github.com/justitia/wallet/crypto"
+	"github.com/DSiSc/wallet/accounts"
+	"github.com/DSiSc/wallet/crypto"
 	"github.com/pborman/uuid"
 	"golang.org/x/crypto/pbkdf2"
 )

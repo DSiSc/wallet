@@ -23,8 +23,8 @@ import (
 	"crypto/elliptic"
 	"fmt"
 
-	"github.com/justitia/wallet/common/math"
-	"github.com/justitia/wallet/crypto/secp256k1"
+	"github.com/DSiSc/wallet/common/math"
+	"github.com/DSiSc/wallet/crypto/secp256k1"
 )
 
 // Ecrecover returns the uncompressed public key that created the given signature.

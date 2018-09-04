@@ -21,8 +21,8 @@ import (
 	"math/big"
 
 	//ethereum "github.com/ethereum/go-ethereum"
-	"github.com/justitia/wallet/common"
-	"github.com/justitia/wallet/core/types"
+	"github.com/DSiSc/wallet/common"
+	"github.com/DSiSc/wallet/core/types"
 	"github.com/ethereum/go-ethereum/event"
 )
 

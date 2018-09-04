@@ -25,8 +25,8 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/justitia/wallet/common/hexutil"
-	"github.com/justitia/wallet/crypto/sha3"
+	"github.com/DSiSc/wallet/common/hexutil"
+	"github.com/DSiSc/wallet/crypto/sha3"
 )
 
 // Lengths of hashes and addresses in bytes.

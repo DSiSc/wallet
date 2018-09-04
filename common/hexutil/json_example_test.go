@@ -20,7 +20,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/justitia/wallet/common/hexutil"
+	"github.com/DSiSc/wallet/common/hexutil"
 )
 
 type MyType [5]byte

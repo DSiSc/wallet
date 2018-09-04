@@ -20,7 +20,7 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"github.com/justitia/wallet/common"
+	"github.com/DSiSc/wallet/common"
 )
 
 const (

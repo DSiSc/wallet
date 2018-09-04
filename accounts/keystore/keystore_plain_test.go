@@ -27,8 +27,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/justitia/wallet/common"
-	"github.com/justitia/wallet/crypto"
+	"github.com/DSiSc/wallet/common"
+	"github.com/DSiSc/wallet/crypto"
 )
 
 func tmpKeyStoreIface(t *testing.T, encrypted bool) (dir string, ks keyStore) {

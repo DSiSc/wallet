@@ -26,8 +26,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/justitia/wallet/common"
-	"github.com/justitia/wallet/common/hexutil"
+	"github.com/DSiSc/wallet/common"
+	"github.com/DSiSc/wallet/common/hexutil"
 )
 
 var testAddrHex = "970e8128ab834e8eac17ab8e3812f010678cf791"

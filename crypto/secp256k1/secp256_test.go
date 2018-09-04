@@ -24,8 +24,8 @@ import (
 	"encoding/hex"
 	"testing"
 
-	"github.com/justitia/wallet/common/math"
-	"github.com/justitia/wallet/crypto/randentropy"
+	"github.com/DSiSc/wallet/common/math"
+	"github.com/DSiSc/wallet/crypto/randentropy"
 )
 
 const TestCount = 1000

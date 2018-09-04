@@ -33,10 +33,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/justitia/wallet/accounts"
-	"github.com/justitia/wallet/common"
-	"github.com/justitia/wallet/core/types"
-	"github.com/justitia/wallet/crypto"
+	"github.com/DSiSc/wallet/accounts"
+	"github.com/DSiSc/wallet/common"
+	"github.com/DSiSc/wallet/core/types"
+	"github.com/DSiSc/wallet/crypto"
 	"github.com/ethereum/go-ethereum/event"
 )
 

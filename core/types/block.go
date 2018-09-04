@@ -26,10 +26,10 @@ import (
 	//"time"
 	//"unsafe"
 
-	"github.com/justitia/wallet/common"
+	"github.com/DSiSc/wallet/common"
 	//	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/rlp"
-	"github.com/justitia/wallet/crypto/sha3"
+	"github.com/DSiSc/wallet/crypto/sha3"
 )
 
 /*
