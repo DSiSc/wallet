@@ -3,9 +3,9 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -52,12 +52,12 @@ func TestEIP155ChainId(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !tx.Protected() {
+	if !Protected(tx) {
 		t.Fatal("expected tx to be protected")
 	}
 
-	if tx.ChainId().Cmp(signer.chainId) != 0 {
-		t.Error("expected chainId to be", signer.chainId, "got", tx.ChainId())
+	if ChainId(tx).Cmp(signer.chainId) != 0 {
+		t.Error("expected chainId to be", signer.chainId, "got", ChainId(tx))
 	}
 
 	tx = NewTransaction(0, addr, new(big.Int), 0, new(big.Int), nil, addr)
@@ -66,12 +66,12 @@ func TestEIP155ChainId(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if tx.Protected() {
+	if Protected(tx) {
 		t.Error("didn't expect tx to be protected")
 	}
 
-	if tx.ChainId().Sign() != 0 {
-		t.Error("expected chain id to be 0 got", tx.ChainId())
+	if ChainId(tx).Sign() != 0 {
+		t.Error("expected chain id to be 0 got", ChainId(tx))
 	}
 }
 

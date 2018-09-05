@@ -18,11 +18,12 @@ import (
 	"math/big"
 	"testing"
 
+	"github.com/DSiSc/craft/types"
 	"github.com/DSiSc/wallet/common"
 	"github.com/stretchr/testify/assert"
 )
 
-var emptyTx *Transaction
+var emptyTx *types.Transaction
 
 func TestNewTransaction(t *testing.T) {
 	assert := assert.New(t)

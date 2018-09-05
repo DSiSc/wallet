@@ -15,6 +15,36 @@
 			"revisionTime": "2018-08-30T19:11:22Z"
 		},
 		{
+			"checksumSHA1": "SYpI0pJl5p7SEobCRngpygmK85g=",
+			"path": "github.com/ethereum/go-ethereum/common",
+			"revision": "cf33d8b83ce78d1e79cd8c43a21070b2050d5c7e",
+			"revisionTime": "2018-09-05T08:29:51Z"
+		},
+		{
+			"checksumSHA1": "2EkKilu0Q1uuX7XoHks8qnW/LXo=",
+			"path": "github.com/ethereum/go-ethereum/common/hexutil",
+			"revision": "cf33d8b83ce78d1e79cd8c43a21070b2050d5c7e",
+			"revisionTime": "2018-09-05T08:29:51Z"
+		},
+		{
+			"checksumSHA1": "pQzUVRi0z/3Z4FpRyExSg1ROLSA=",
+			"path": "github.com/ethereum/go-ethereum/crypto/sha3",
+			"revision": "cf33d8b83ce78d1e79cd8c43a21070b2050d5c7e",
+			"revisionTime": "2018-09-05T08:29:51Z"
+		},
+		{
+			"checksumSHA1": "Yj4osJOGLGaoM9dYoafzXaXMZrE=",
+			"path": "github.com/ethereum/go-ethereum/params",
+			"revision": "cf33d8b83ce78d1e79cd8c43a21070b2050d5c7e",
+			"revisionTime": "2018-09-05T08:29:51Z"
+		},
+		{
+			"checksumSHA1": "z90HAmaR1d3Q71bT3FfCb38aPbw=",
+			"path": "github.com/ethereum/go-ethereum/rlp",
+			"revision": "cf33d8b83ce78d1e79cd8c43a21070b2050d5c7e",
+			"revisionTime": "2018-09-05T08:29:51Z"
+		},
+		{
 			"checksumSHA1": "3ohk4dFYrERZ6WTdKkIwnTA0HSI=",
 			"path": "github.com/kr/pretty",
 			"revision": "73f6ac0b30a98e433b289500d779f50c1a6f0712",

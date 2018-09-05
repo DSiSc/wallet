@@ -3,9 +3,9 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,10 +20,6 @@ import (
 	"github.com/DSiSc/craft/types"
 	"github.com/DSiSc/wallet/common"
 )
-
-type Transaction struct {
-	types.Transaction
-}
 
 func CopyBytes(b []byte) (copiedBytes []byte) {
 	if b == nil {
@@ -42,7 +38,7 @@ func TypeConvert(a *common.Address) *types.Address {
 }
 
 // New a transaction
-func newTransaction(nonce uint64, to *common.Address, amount *big.Int, gasLimit uint64, gasPrice *big.Int, data []byte, from *common.Address) *Transaction {
+func newTransaction(nonce uint64, to *common.Address, amount *big.Int, gasLimit uint64, gasPrice *big.Int, data []byte, from *common.Address) *types.Transaction {
 	if len(data) > 0 {
 		data = CopyBytes(data)
 	}
@@ -65,25 +61,19 @@ func newTransaction(nonce uint64, to *common.Address, amount *big.Int, gasLimit 
 		d.Price.Set(gasPrice)
 	}
 
-	var tx Transaction
-	tx.Data = d
-	return &tx
+	return &types.Transaction{Data: d}
 }
 
-func NewTransaction(nonce uint64, to common.Address, amount *big.Int, gasLimit uint64, gasPrice *big.Int, data []byte, from common.Address) *Transaction {
+func NewTransaction(nonce uint64, to common.Address, amount *big.Int, gasLimit uint64, gasPrice *big.Int, data []byte, from common.Address) *types.Transaction {
 	return newTransaction(nonce, &to, amount, gasLimit, gasPrice, data, &from)
 }
 
-// ChainId returns which chain id this transaction was signed for (if at all)
-func (tx *Transaction) ChainId() *big.Int {
+func ChainId(tx *types.Transaction) *big.Int {
 	return deriveChainId(tx.Data.V)
-
 }
 
-// Protected returns whether the transaction is protected from replay protection.
-func (tx *Transaction) Protected() bool {
+func Protected(tx *types.Transaction) bool {
 	return isProtectedV(tx.Data.V)
-
 }
 
 func isProtectedV(V *big.Int) bool {
@@ -99,16 +89,15 @@ func isProtectedV(V *big.Int) bool {
 
 // WithSignature returns a new transaction with the given signature.
 // This signature needs to be formatted as described in the yellow paper (v+27).
-func (tx *Transaction) WithSignature(signer Signer, sig []byte) (*Transaction, error) {
+func WithSignature(tx *types.Transaction, signer Signer, sig []byte) (*types.Transaction, error) {
 	r, s, v, err := signer.SignatureValues(tx, sig)
 	if err != nil {
 		return nil, err
 
 	}
 
-	var cpy Transaction
-	cpy.Data = tx.Data
+	cpy := &types.Transaction{Data: tx.Data}
 	cpy.Data.R, cpy.Data.S, cpy.Data.V = r, s, v
-	return &cpy, nil
+	return cpy, nil
 
 }
