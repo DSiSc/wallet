@@ -1,18 +1,16 @@
-// Copyright 2016 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright(c) 2018 DSiSc Group. All Rights Reserved.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Lesser General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// The go-ethereum library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU Lesser General Public License for more details.
-//
-// You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 package types
 
@@ -20,9 +18,10 @@ import (
 	"math/big"
 	"testing"
 
+	"crypto/ecdsa"
+
 	"github.com/DSiSc/wallet/common"
 	"github.com/DSiSc/wallet/crypto"
-	"github.com/ethereum/go-ethereum/rlp"
 )
 
 func TestEIP155Signing(t *testing.T) {
@@ -30,7 +29,7 @@ func TestEIP155Signing(t *testing.T) {
 	addr := crypto.PubkeyToAddress(key.PublicKey)
 
 	signer := NewEIP155Signer(big.NewInt(18))
-	tx, err := SignTx(NewTransaction(0, addr, new(big.Int), 0, new(big.Int), nil), signer, key)
+	tx, err := SignTx(NewTransaction(0, addr, new(big.Int), 0, new(big.Int), nil, addr), signer, key)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -49,7 +48,7 @@ func TestEIP155ChainId(t *testing.T) {
 	addr := crypto.PubkeyToAddress(key.PublicKey)
 
 	signer := NewEIP155Signer(big.NewInt(18))
-	tx, err := SignTx(NewTransaction(0, addr, new(big.Int), 0, new(big.Int), nil), signer, key)
+	tx, err := SignTx(NewTransaction(0, addr, new(big.Int), 0, new(big.Int), nil, addr), signer, key)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -61,7 +60,7 @@ func TestEIP155ChainId(t *testing.T) {
 		t.Error("expected chainId to be", signer.chainId, "got", tx.ChainId())
 	}
 
-	tx = NewTransaction(0, addr, new(big.Int), 0, new(big.Int), nil)
+	tx = NewTransaction(0, addr, new(big.Int), 0, new(big.Int), nil, addr)
 	tx, err = SignTx(tx, HomesteadSigner{}, key)
 	if err != nil {
 		t.Fatal(err)
@@ -76,6 +75,7 @@ func TestEIP155ChainId(t *testing.T) {
 	}
 }
 
+/*
 func TestEIP155SigningVitalik(t *testing.T) {
 	// Test vectors come from http://vitalik.ca/files/eip155_testvec.txt
 	for i, test := range []struct {
@@ -114,11 +114,12 @@ func TestEIP155SigningVitalik(t *testing.T) {
 
 	}
 }
+*/
 
 func TestChainId(t *testing.T) {
 	key, _ := defaultTestKey()
 
-	tx := NewTransaction(0, common.Address{}, new(big.Int), 0, new(big.Int), nil)
+	tx := NewTransaction(0, common.Address{}, new(big.Int), 0, new(big.Int), nil, common.Address{})
 
 	var err error
 	tx, err = SignTx(tx, NewEIP155Signer(big.NewInt(1)), key)
@@ -135,4 +136,54 @@ func TestChainId(t *testing.T) {
 	if err != nil {
 		t.Error("expected no error")
 	}
+}
+
+func TestHomesteadSigning(t *testing.T) {
+	key, _ := crypto.GenerateKey()
+	addr := crypto.PubkeyToAddress(key.PublicKey)
+
+	signer := new(HomesteadSigner)
+	tx, err := SignTx(
+		NewTransaction(0, addr, new(big.Int), 0, new(big.Int), nil, addr),
+		signer, key)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	from, err := Sender(signer, tx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if from != addr {
+		t.Errorf("exected from and address to be equal. Got %x want %x", from, addr)
+	}
+}
+
+func TestFrontierSigning(t *testing.T) {
+	key, _ := crypto.GenerateKey()
+	addr := crypto.PubkeyToAddress(key.PublicKey)
+
+	signer := new(FrontierSigner)
+	tx, err := SignTx(
+		NewTransaction(0, addr, new(big.Int), 0, new(big.Int), nil, addr),
+		signer, key)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	from, err := Sender(signer, tx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if from != addr {
+		t.Errorf("exected from and address to be equal. Got %x want %x", from, addr)
+	}
+}
+
+// --------------------------
+// package Function inner
+func defaultTestKey() (*ecdsa.PrivateKey, common.Address) {
+	key, _ := crypto.HexToECDSA("45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8")
+	addr := crypto.PubkeyToAddress(key.PublicKey)
+	return key, addr
 }

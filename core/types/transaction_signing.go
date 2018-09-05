@@ -1,18 +1,16 @@
-// Copyright 2016 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright(c) 2018 DSiSc Group. All Rights Reserved.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Lesser General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// The go-ethereum library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU Lesser General Public License for more details.
-//
-// You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 package types
 
@@ -22,13 +20,16 @@ import (
 	"fmt"
 	"math/big"
 
+	"github.com/DSiSc/evm-NG/common/rlp"
 	"github.com/DSiSc/wallet/common"
 	"github.com/DSiSc/wallet/crypto"
+	"github.com/DSiSc/wallet/crypto/sha3"
 	"github.com/ethereum/go-ethereum/params"
 )
 
 var (
 	ErrInvalidChainId = errors.New("invalid chain id for signer")
+	ErrInvalidSig     = errors.New("invalid transaction v, r, s values")
 )
 
 // sigCache is used to cache the derived sender and contains
@@ -70,7 +71,7 @@ func SignTx(tx *Transaction, s Signer, prv *ecdsa.PrivateKey) (*Transaction, err
 // signing method. The cache is invalidated if the cached signer does
 // not match the signer used in the current call.
 func Sender(signer Signer, tx *Transaction) (common.Address, error) {
-	if sc := tx.from.Load(); sc != nil {
+	if sc := tx.From.Load(); sc != nil {
 		sigCache := sc.(sigCache)
 		// If the signer used to derive from in a previous
 		// call is not the same as used current, invalidate
@@ -84,7 +85,7 @@ func Sender(signer Signer, tx *Transaction) (common.Address, error) {
 	if err != nil {
 		return common.Address{}, err
 	}
-	tx.from.Store(sigCache{signer: signer, from: addr})
+	tx.From.Store(sigCache{signer: signer, from: addr})
 	return addr, nil
 }
 
@@ -131,9 +132,9 @@ func (s EIP155Signer) Sender(tx *Transaction) (common.Address, error) {
 	if tx.ChainId().Cmp(s.chainId) != 0 {
 		return common.Address{}, ErrInvalidChainId
 	}
-	V := new(big.Int).Sub(tx.data.V, s.chainIdMul)
+	V := new(big.Int).Sub(tx.Data.V, s.chainIdMul)
 	V.Sub(V, big8)
-	return recoverPlain(s.Hash(tx), tx.data.R, tx.data.S, V, true)
+	return recoverPlain(s.Hash(tx), tx.Data.R, tx.Data.S, V, true)
 }
 
 // WithSignature returns a new transaction with the given signature. This signature
@@ -154,12 +155,12 @@ func (s EIP155Signer) SignatureValues(tx *Transaction, sig []byte) (R, S, V *big
 // It does not uniquely identify the transaction.
 func (s EIP155Signer) Hash(tx *Transaction) common.Hash {
 	return rlpHash([]interface{}{
-		tx.data.AccountNonce,
-		tx.data.Price,
-		tx.data.GasLimit,
-		tx.data.Recipient,
-		tx.data.Amount,
-		tx.data.Payload,
+		tx.Data.AccountNonce,
+		tx.Data.Price,
+		tx.Data.GasLimit,
+		tx.Data.Recipient,
+		tx.Data.Amount,
+		tx.Data.Payload,
 		s.chainId, uint(0), uint(0),
 	})
 }
@@ -180,7 +181,7 @@ func (hs HomesteadSigner) SignatureValues(tx *Transaction, sig []byte) (r, s, v 
 }
 
 func (hs HomesteadSigner) Sender(tx *Transaction) (common.Address, error) {
-	return recoverPlain(hs.Hash(tx), tx.data.R, tx.data.S, tx.data.V, true)
+	return recoverPlain(hs.Hash(tx), tx.Data.R, tx.Data.S, tx.Data.V, true)
 }
 
 type FrontierSigner struct{}
@@ -206,17 +207,17 @@ func (fs FrontierSigner) SignatureValues(tx *Transaction, sig []byte) (r, s, v *
 // It does not uniquely identify the transaction.
 func (fs FrontierSigner) Hash(tx *Transaction) common.Hash {
 	return rlpHash([]interface{}{
-		tx.data.AccountNonce,
-		tx.data.Price,
-		tx.data.GasLimit,
-		tx.data.Recipient,
-		tx.data.Amount,
-		tx.data.Payload,
+		tx.Data.AccountNonce,
+		tx.Data.Price,
+		tx.Data.GasLimit,
+		tx.Data.Recipient,
+		tx.Data.Amount,
+		tx.Data.Payload,
 	})
 }
 
 func (fs FrontierSigner) Sender(tx *Transaction) (common.Address, error) {
-	return recoverPlain(fs.Hash(tx), tx.data.R, tx.data.S, tx.data.V, false)
+	return recoverPlain(fs.Hash(tx), tx.Data.R, tx.Data.S, tx.Data.V, false)
 }
 
 func recoverPlain(sighash common.Hash, R, S, Vb *big.Int, homestead bool) (common.Address, error) {
@@ -257,4 +258,11 @@ func deriveChainId(v *big.Int) *big.Int {
 	}
 	v = new(big.Int).Sub(v, big.NewInt(35))
 	return v.Div(v, big.NewInt(2))
+}
+
+func rlpHash(x interface{}) (h common.Hash) {
+	hw := sha3.NewKeccak256()
+	rlp.Encode(hw, x)
+	hw.Sum(h[:0])
+	return h
 }
