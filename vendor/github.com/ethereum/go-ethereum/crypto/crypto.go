@@ -28,9 +28,9 @@ import (
 	"math/big"
 	"os"
 
-	"github.com/DSiSc/wallet/common"
-	"github.com/DSiSc/wallet/common/math"
-	"github.com/DSiSc/wallet/crypto/sha3"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/math"
+	"github.com/ethereum/go-ethereum/crypto/sha3"
 	"github.com/ethereum/go-ethereum/rlp"
 )
 

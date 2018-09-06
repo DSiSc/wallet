@@ -26,7 +26,7 @@ import (
 	"strings"
 
 	"github.com/DSiSc/wallet/common/hexutil"
-	"github.com/DSiSc/wallet/crypto/sha3"
+	"github.com/ethereum/go-ethereum/crypto/sha3"
 )
 
 // Lengths of hashes and addresses in bytes.

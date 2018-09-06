@@ -22,9 +22,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/DSiSc/wallet/common"
-	"github.com/DSiSc/wallet/common/hexutil"
-	"github.com/DSiSc/wallet/common/math"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/ethereum/go-ethereum/common/math"
 )
 
 var (

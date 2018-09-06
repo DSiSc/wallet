@@ -18,15 +18,12 @@ import (
 	"math/big"
 	"testing"
 
-	"crypto/ecdsa"
-
 	"github.com/DSiSc/wallet/common"
-	"github.com/DSiSc/wallet/crypto"
 )
 
 func TestEIP155Signing(t *testing.T) {
-	key, _ := crypto.GenerateKey()
-	addr := crypto.PubkeyToAddress(key.PublicKey)
+
+	key, addr := DefaultTestKey()
 
 	signer := NewEIP155Signer(big.NewInt(18))
 	tx, err := SignTx(NewTransaction(0, addr, new(big.Int), 0, new(big.Int), nil, addr), signer, key)
@@ -44,8 +41,8 @@ func TestEIP155Signing(t *testing.T) {
 }
 
 func TestEIP155ChainId(t *testing.T) {
-	key, _ := crypto.GenerateKey()
-	addr := crypto.PubkeyToAddress(key.PublicKey)
+
+	key, addr := DefaultTestKey()
 
 	signer := NewEIP155Signer(big.NewInt(18))
 	tx, err := SignTx(NewTransaction(0, addr, new(big.Int), 0, new(big.Int), nil, addr), signer, key)
@@ -117,7 +114,7 @@ func TestEIP155SigningVitalik(t *testing.T) {
 */
 
 func TestChainId(t *testing.T) {
-	key, _ := defaultTestKey()
+	key, _ := DefaultTestKey()
 
 	tx := NewTransaction(0, common.Address{}, new(big.Int), 0, new(big.Int), nil, common.Address{})
 
@@ -139,8 +136,8 @@ func TestChainId(t *testing.T) {
 }
 
 func TestHomesteadSigning(t *testing.T) {
-	key, _ := crypto.GenerateKey()
-	addr := crypto.PubkeyToAddress(key.PublicKey)
+
+	key, addr := DefaultTestKey()
 
 	signer := new(HomesteadSigner)
 	tx, err := SignTx(
@@ -160,8 +157,8 @@ func TestHomesteadSigning(t *testing.T) {
 }
 
 func TestFrontierSigning(t *testing.T) {
-	key, _ := crypto.GenerateKey()
-	addr := crypto.PubkeyToAddress(key.PublicKey)
+
+	key, addr := DefaultTestKey()
 
 	signer := new(FrontierSigner)
 	tx, err := SignTx(
@@ -178,12 +175,4 @@ func TestFrontierSigning(t *testing.T) {
 	if from != addr {
 		t.Errorf("exected from and address to be equal. Got %x want %x", from, addr)
 	}
-}
-
-// --------------------------
-// package Function inner
-func defaultTestKey() (*ecdsa.PrivateKey, common.Address) {
-	key, _ := crypto.HexToECDSA("45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8")
-	addr := crypto.PubkeyToAddress(key.PublicKey)
-	return key, addr
 }

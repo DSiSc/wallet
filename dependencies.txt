@@ -6,5 +6,4 @@
 #github.com/user/proj2:master
 
 github.com/DSiSc/craft:master
-github.com/DSiSc/evm-NG:master
 
