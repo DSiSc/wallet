@@ -9,56 +9,6 @@
 			"revisionTime": "2018-09-04T10:47:23Z"
 		},
 		{
-			"checksumSHA1": "gZQ6HheWahvZzIc3phBnOwoWHjE=",
-			"origin": "github.com/ethereum/go-ethereum/vendor/github.com/btcsuite/btcd/btcec",
-			"path": "github.com/btcsuite/btcd/btcec",
-			"revision": "dcdd57df6282a6cd43a6407e8626a5cdcca60482",
-			"revisionTime": "2018-07-18T10:41:36Z"
-		},
-		{
-			"checksumSHA1": "dvabztWVQX8f6oMLRyv4dLH+TGY=",
-			"origin": "github.com/stretchr/testify/vendor/github.com/davecgh/go-spew/spew",
-			"path": "github.com/davecgh/go-spew/spew",
-			"revision": "f35b8ab0b5a2cef36673838d662e249dd9c94686",
-			"revisionTime": "2018-05-06T18:05:49Z"
-		},
-		{
-			"checksumSHA1": "H3pCPIvAuuyFfby9puLkZU7Ra2w=",
-			"path": "github.com/ethereum/go-ethereum/common",
-			"revision": "dcdd57df6282a6cd43a6407e8626a5cdcca60482",
-			"revisionTime": "2018-07-18T10:41:36Z"
-		},
-		{
-			"checksumSHA1": "2EkKilu0Q1uuX7XoHks8qnW/LXo=",
-			"path": "github.com/ethereum/go-ethereum/common/hexutil",
-			"revision": "dcdd57df6282a6cd43a6407e8626a5cdcca60482",
-			"revisionTime": "2018-07-18T10:41:36Z"
-		},
-		{
-			"checksumSHA1": "BP3m/oEeoC9ustdCYzAVS/gabqg=",
-			"path": "github.com/ethereum/go-ethereum/common/math",
-			"revision": "dcdd57df6282a6cd43a6407e8626a5cdcca60482",
-			"revisionTime": "2018-07-18T10:41:36Z"
-		},
-		{
-			"checksumSHA1": "qTpwOUO960liQbndOjEsa+250O0=",
-			"path": "github.com/ethereum/go-ethereum/crypto",
-			"revision": "dcdd57df6282a6cd43a6407e8626a5cdcca60482",
-			"revisionTime": "2018-07-18T10:41:36Z"
-		},
-		{
-			"checksumSHA1": "rh+7MlXrS29QaJG/YZCAjlR+hxg=",
-			"path": "github.com/ethereum/go-ethereum/crypto/secp256k1",
-			"revision": "dcdd57df6282a6cd43a6407e8626a5cdcca60482",
-			"revisionTime": "2018-07-18T10:41:36Z"
-		},
-		{
-			"checksumSHA1": "pQzUVRi0z/3Z4FpRyExSg1ROLSA=",
-			"path": "github.com/ethereum/go-ethereum/crypto/sha3",
-			"revision": "cf33d8b83ce78d1e79cd8c43a21070b2050d5c7e",
-			"revisionTime": "2018-09-05T08:29:51Z"
-		},
-		{
 			"checksumSHA1": "Yj4osJOGLGaoM9dYoafzXaXMZrE=",
 			"path": "github.com/ethereum/go-ethereum/params",
 			"revision": "cf33d8b83ce78d1e79cd8c43a21070b2050d5c7e",
@@ -81,13 +31,6 @@
 			"path": "github.com/kr/text",
 			"revision": "e2ffdb16a802fe2bb95e2e35ff34f0e53aeef34f",
 			"revisionTime": "2018-05-06T08:24:08Z"
-		},
-		{
-			"checksumSHA1": "LuFv4/jlrmFNnDb/5SCSEPAM9vU=",
-			"origin": "github.com/stretchr/testify/vendor/github.com/pmezard/go-difflib/difflib",
-			"path": "github.com/pmezard/go-difflib/difflib",
-			"revision": "f35b8ab0b5a2cef36673838d662e249dd9c94686",
-			"revisionTime": "2018-05-06T18:05:49Z"
 		},
 		{
 			"checksumSHA1": "c6pbpF7eowwO59phRTpF8cQ80Z0=",

@@ -21,11 +21,11 @@ import (
 	"math/big"
 
 	"github.com/DSiSc/craft/types"
+	"github.com/DSiSc/crypto-suite/crypto"
+	"github.com/DSiSc/crypto-suite/crypto/sha3"
 	"github.com/DSiSc/wallet/common"
-	"github.com/ethereum/go-ethereum/rlp"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/crypto/sha3"
 	"github.com/ethereum/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/rlp"
 )
 
 var (
@@ -68,7 +68,9 @@ func SignTx(tx *types.Transaction, s Signer, prv *ecdsa.PrivateKey) (*types.Tran
 // FIXME(peerlink): default key for Test
 func DefaultTestKey() (*ecdsa.PrivateKey, common.Address) {
 	key, _ := crypto.HexToECDSA("45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8")
-	addr := common.BytesToAddress(crypto.PubkeyToAddress(key.PublicKey).Bytes())
+	tempaddr := crypto.PubkeyToAddress(key.PublicKey)
+    addr := common.BytesToAddress(tempaddr[:])
+    
 	return key, addr
 }
 
