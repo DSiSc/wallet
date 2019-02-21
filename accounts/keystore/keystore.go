@@ -288,7 +288,6 @@ func (ks *KeyStore) SignTxWithPassphrase(a accounts.Account, passphrase string, 
 		return local.SignTx(tx, local.NewEIP155Signer(chainID), key.PrivateKey)
 	}
 	return local.SignTx(tx, local.HomesteadSigner{}, key.PrivateKey)
-	return nil, nil
 }
 
 // Unlock unlocks the given account indefinitely.
