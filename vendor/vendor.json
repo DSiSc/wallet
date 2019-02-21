@@ -159,6 +159,12 @@
 			"revisionTime": "2019-01-28T09:35:27Z"
 		},
 		{
+			"checksumSHA1": "gsIBQgvpLIDib2D5WMogalWa5PY=",
+			"path": "github.com/DSiSc/crypto-suite",
+			"revision": "aaede20b68c6cc641e9866b909a5623f3c72fdc9",
+			"revisionTime": "2018-11-01T11:35:31Z"
+		},
+		{
 			"checksumSHA1": "25nXzLi0KDOu3YmYDh8qf8sk7TU=",
 			"path": "github.com/DSiSc/crypto-suite/common",
 			"revision": "aaede20b68c6cc641e9866b909a5623f3c72fdc9",
