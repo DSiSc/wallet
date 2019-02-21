@@ -27,6 +27,7 @@ import (
 
 	"github.com/DSiSc/crypto-suite/crypto/sha3"
 	"github.com/DSiSc/wallet/common/hexutil"
+	"github.com/DSiSc/craft/types"
 )
 
 // Lengths of hashes and addresses in bytes.
@@ -136,7 +137,7 @@ func (h UnprefixedHash) MarshalText() ([]byte, error) {
 /////////// Address
 
 // Address represents the 20 byte address of an Ethereum account.
-type Address [AddressLength]byte
+type Address types.Address
 
 // BytesToAddress returns Address with value b.
 // If b is larger than len(h), b will be cropped from the left.

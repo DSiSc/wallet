@@ -24,8 +24,7 @@ import (
 	"github.com/DSiSc/crypto-suite/crypto"
 	"github.com/DSiSc/crypto-suite/crypto/sha3"
 	"github.com/DSiSc/wallet/common"
-	"github.com/ethereum/go-ethereum/params"
-	"github.com/ethereum/go-ethereum/rlp"
+	"github.com/DSiSc/crypto-suite/rlp"
 )
 
 var (
@@ -39,7 +38,7 @@ type sigCache struct {
 	signer Signer
 	from   common.Address
 }
-
+/*
 // MakeSigner returns a Signer based on the given chain config and block number.
 func MakeSigner(config *params.ChainConfig, blockNumber *big.Int) Signer {
 	var signer Signer
@@ -53,7 +52,7 @@ func MakeSigner(config *params.ChainConfig, blockNumber *big.Int) Signer {
 	}
 	return signer
 }
-
+*/
 // SignTx signs the transaction using the given signer and private key
 func SignTx(tx *types.Transaction, s Signer, prv *ecdsa.PrivateKey) (*types.Transaction, error) {
 	h := s.Hash(tx)
