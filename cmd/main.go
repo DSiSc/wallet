@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/DSiSc/justitia/node"
 	"github.com/DSiSc/wallet/utils"
 	"github.com/urfave/cli"
 	"os"
@@ -62,9 +61,5 @@ func main() {
 func wallet(ctx *cli.Context) error {
 	fmt.Print("***wallet()")
 	return nil
-}
-
-func startNode(ctx *cli.Context, stack *node.Node) {
-
 }
 
