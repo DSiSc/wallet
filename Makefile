@@ -49,7 +49,7 @@ spelling:
 
 lint:
 	@echo "Check code style..."
-	golint `go list ./...`
+	#golint `go list ./...`
 
 static-check: fmt spelling lint
 

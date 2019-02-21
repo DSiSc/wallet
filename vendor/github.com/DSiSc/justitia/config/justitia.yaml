@@ -1,0 +1,179 @@
+################################################################################
+#
+#   NODE PROPERTIES
+#
+#   - List all algorithm and policy specific properties here.
+#   - Nest keys where appropriate, and sort alphabetically for easier parsing.
+#
+################################################################################
+general:
+
+  # Node type,  which in { 0: UnknownNode, 1: ConsensusNode, 2: FullNode, 3:LightNode, 4:MaxNodeType}
+  nodeType: 1
+
+  # Operational algorithm: "SHA256", "Keccak512", "Keccak256", "SM3"
+  hashAlgorithm: SHA256
+
+  # Api gateway for api
+  apigateway: tcp://0.0.0.0:47768
+
+  # Node info, specified node information
+  node:
+    address: 333c3310824b7c685133f2bedb2ca4b8b4df633d
+    id: 0
+    url: 127.0.0.1:8080
+
+  # Block chain setting
+  # Operational plugin: memorydb or leveldb
+  # When leveldb is choose, define statepath and datapath in absolute path
+  blockchain:
+    plugin: memorydb
+    statepath: /var/lib/justitia/state
+    datapath: /var/lib/justitia/block
+
+  # Tx pool setting
+  txpool:
+    globalSlots: 4096
+    txsPerBlock: 512
+
+  # Participates setting
+  # Operational policy: solo, dpos
+  participates:
+    policy: solo
+    participates: 4
+    node0:
+        address: 333c3310824b7c685133f2bedb2ca4b8b4df633d
+        id: 1
+        url: 127.0.0.1:8080
+    node1:
+        address: 343c3310824b7c685133f2bedb2ca4b8b4df633d
+        id: 2
+        url: 127.0.0.2:8080
+    node2:
+        address: 353c3310824b7c685133f2bedb2ca4b8b4df633d
+        id: 3
+        url: 127.0.0.3:8080
+    node3:
+        address: 363c3310824b7c685133f2bedb2ca4b8b4df633d
+        id: 4
+        url: 127.0.0.4:8080
+
+  # Role setting
+  # Operational policy: solo, dpos
+  role:
+    policy: solo
+
+  # Consensus setting
+  # Operational policy: solo, bft
+  # Timeout to consensus, all time setting in millisecond
+  consensus:
+    policy: solo
+    enableEmptyBlock: false
+    localSignatureVerify: false
+    syncSignatureVerify: false
+    timeoutToWaitCommit: 5000
+    timeoutToViewChange: 30000
+    timeoutToCollectResponse: 5000
+
+  # Block produce interval for solo mode in Millisecond
+  BlockProducedInterval: 2000
+
+  # signature switch
+  signature:
+      producer: false
+      txswitch: false
+      blockswitch: false
+
+  # p2p setting
+  # Operational plugin: memorydb or leveldb
+  # When leveldb is choose, define statepath and datapath in absolute path
+  p2p:
+    blockSyncer:
+      AddrBookFilePath: ./var/log/justitia/syncer_address.json
+      ListenAddress:  tcp://0.0.0.0:46660
+      MaxConnOutBound:  24
+      MaxConnInBound: 48
+      PersistentPeers:
+      DebugP2P: false
+      DebugServer:
+      DebugAddr:
+    block:
+      AddrBookFilePath: ./var/log/justitia/block_address.json
+      ListenAddress:  tcp://0.0.0.0:46661
+      MaxConnOutBound:  24
+      MaxConnInBound: 48
+      PersistentPeers:
+      DebugP2P: false
+      DebugServer:
+      DebugAddr:
+    tx:
+      AddrBookFilePath: ./var/log/justitia/tx_address.json
+      ListenAddress:  tcp://0.0.0.0:46662
+      MaxConnOutBound:  24
+      MaxConnInBound: 48
+      PersistentPeers:
+      DebugP2P: false
+      DebugServer:
+      DebugAddr:
+
+################################################################################
+#
+#   SECTION: monitor
+#
+#   - This section define monitor setting
+#
+################################################################################
+monitor:
+
+  # The prometheus setting
+  prometheus:
+    enabled: true
+    port: 47780
+    maxOpenConnections: 3
+
+  expvar:
+    enabled: true
+    port: 6060
+    path: /debug/vars
+
+  pprof:
+    enabled: true
+    port: 6666
+
+
+################################################################################
+#
+#   SECTION: log
+#
+#   - This section define log setting
+#
+################################################################################
+logging:
+
+  # Define the timestamp field format globally
+  timeFieldFormat: "2006-01-02 15:04:05.000"
+
+  :
+    enabled: true
+    # Define log level, which in { 0: debug, 1: info, 2: warn, 3: error, 4: fatal, 5: panic, 6: disable}
+    level: 1
+    # Define log print formation, which is json ot text
+    format: text
+    # Define whether to show caller info in log output
+    caller: true
+    # Define whether to show hostname info in log output
+    hostname: false
+
+
+  file:
+    enabled: true
+    # Define log output file path, in absolute path
+    path: ./var/log/justitia/justitia.log
+    # Define log level, which in { 0: debug, 1: info, 2: warn, 3: error, 4: fatal, 5: panic, 6: disable}
+    level: 1
+    # Define log print formation, which is json ot text
+    format: text
+    # Define whether to show caller info in log output
+    caller: true
+    # Define whether to show hostname info in log output
+    hostname: true

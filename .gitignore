@@ -25,3 +25,7 @@ coverage.txt
 
 # tmp
 *.sw?
+
+# keystore
+keystore
+*UTC--*
