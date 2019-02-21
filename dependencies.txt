@@ -7,5 +7,4 @@
 
 github.com/DSiSc/craft:master
 github.com/DSiSc/crypto-suite:master
-github.com/DSiSc/justitia:master
 github.com/DSiSc/monkey:master
