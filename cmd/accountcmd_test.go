@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/DSiSc/wallet/utils"
 	"github.com/cespare/cp"
 	"path/filepath"
 	"runtime"
@@ -90,4 +91,13 @@ Passphrase: {{.InputLine "foobar"}}
 Repeat passphrase: {{.InputLine "foobar"}}
 `)
 	geth.ExpectRegexp(`Address: \{[0-9a-f]{40}\}\n`)
+}
+
+func TestMakeAccountManager(t *testing.T) {
+	datadir := tmpDatadirWithKeystore(t)
+	keystoreDir := filepath.Join(datadir, "keystore")
+	_, _, err := makeAccountManager(keystoreDir)
+	if err != nil {
+		utils.Fatalf("Could not make account manager: %v", err)
+	}
 }
