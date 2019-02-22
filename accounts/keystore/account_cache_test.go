@@ -18,17 +18,22 @@ var (
 	cachetestDir, _   = filepath.Abs(filepath.Join("testdata", "keystore"))
 	cachetestAccounts = []accounts.Account{
 		{
-			Address: common.HexToAddress("9953974128a116a79bed4836e571a77090d098fa"),
-			URL:     accounts.URL{Scheme: KeyStoreScheme, Path: filepath.Join(cachetestDir, "UTC--2019-02-18T09-28-58.890894000Z--9953974128a116a79bed4836e571a77090d098fa")},
+			Address: common.HexToAddress("b69569609605b15ff631c3e85de107d862c6f134"),
+			URL:     accounts.URL{Scheme: KeyStoreScheme, Path: filepath.Join(cachetestDir, "UTC--2019-02-15T12-05-05.684713000Z--b69569609605b15ff631c3e85de107d862c6f134")},
 		},
 		{
-			Address: common.HexToAddress("9e74398ee0aace4e04973e01851619b422b94cf6"),
-			URL:     accounts.URL{Scheme: KeyStoreScheme, Path: filepath.Join(cachetestDir, "UTC--2019-02-18T09-04-58.566361000Z--9e74398ee0aace4e04973e01851619b422b94cf6")},
+			Address: common.HexToAddress("94cdad6a9c62e418608f8ef5814821e74db3e331"),
+			URL:     accounts.URL{Scheme: KeyStoreScheme, Path: filepath.Join(cachetestDir, "UTC--2019-02-18T04-32-03.186218000Z--94cdad6a9c62e418608f8ef5814821e74db3e331")},
+		},
+		{
+			Address: common.HexToAddress("f466859ead1932d743d622cb74fc058882e8648a"),
+			URL:     accounts.URL{Scheme: KeyStoreScheme, Path: filepath.Join(cachetestDir, "aaa")},
 		},
 		{
 			Address: common.HexToAddress("289d485d9771714cce91d3393d764e1311907acc"),
 			URL:     accounts.URL{Scheme: KeyStoreScheme, Path: filepath.Join(cachetestDir, "zzz")},
 		},
+
 	}
 )
 
@@ -71,6 +76,7 @@ func TestWatchNewFile(t *testing.T) {
 	}
 	t.Errorf("got %s, want %s", spew.Sdump(list), spew.Sdump(wantAccounts))
 }
+
 
 func TestWatchNoDir(t *testing.T) {
 	t.Parallel()
