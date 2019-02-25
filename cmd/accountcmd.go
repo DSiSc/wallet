@@ -7,8 +7,6 @@ import (
 	"github.com/DSiSc/wallet/accounts/keystore"
 	"github.com/DSiSc/wallet/utils"
 	"github.com/urfave/cli"
-	"io/ioutil"
-	"os"
 	"path/filepath"
 )
 
@@ -81,7 +79,7 @@ func accountList(ctx *cli.Context) error {
 	}
 	keyStoreDir = filepath.Join(dataDir, keyStoreDir)
 
-	manager, _, err := makeAccountManager(keyStoreDir)
+	manager, _, err := utils.MakeAccountManager(keyStoreDir)
 	if err != nil {
 		utils.Fatalf("Could not make account manager: %v", err)
 	}
@@ -163,7 +161,7 @@ func accountCreate(ctx *cli.Context) error {
 	}
 	keyStoreDir = filepath.Join(dataDir, keyStoreDir)
 
-	scryptN, scryptP, keydir, err := AccountConfig(keyStoreDir)
+	scryptN, scryptP, keydir, err := utils.AccountConfig(keyStoreDir)
 
 	if err != nil {
 		utils.Fatalf("Failed to read configuration: %v", err)
@@ -192,7 +190,7 @@ func accountUpdate(ctx *cli.Context) error {
 	}
 	keyStoreDir = filepath.Join(dataDir, keyStoreDir)
 
-	manager, _, _ := makeAccountManager(keyStoreDir)
+	manager, _, _ := utils.MakeAccountManager(keyStoreDir)
 	ks := manager.Backends(keystore.KeyStoreType)[0].(*keystore.KeyStore)
 
 	for _, addr := range ctx.Args() {
@@ -203,24 +201,6 @@ func accountUpdate(ctx *cli.Context) error {
 		}
 	}
 	return nil
-}
-
-func AccountConfig(keystoreDir string) (int, int, string, error) {
-	scryptN := keystore.StandardScryptN
-	scryptP := keystore.StandardScryptP
-
-	var (
-		keydir string
-		err    error
-	)
-	switch {
-	case filepath.IsAbs(keystoreDir):
-		keydir = keystoreDir
-
-	case keystoreDir != "":
-		keydir, err = filepath.Abs(keystoreDir)
-	}
-	return scryptN, scryptP, keydir, err
 }
 
 // getPassPhrase retrieves the password associated with an account, either fetched
@@ -260,30 +240,6 @@ func getPassPhrase(prompt string, confirmation bool, i int, passwords []string) 
 	return password
 }
 
-func makeAccountManager(keystoreDir string) (*accounts.Manager, string, error) {
-	scryptN, scryptP, keydir, err := AccountConfig(keystoreDir)
-	var ephemeral string
-	if keydir == "" {
-		// There is no datadir.
-		keydir, err = ioutil.TempDir("", "wallet-keystore")
-		ephemeral = keydir
-	}
-
-	if err != nil {
-		return nil, "", err
-	}
-	if err := os.MkdirAll(keydir, 0700); err != nil {
-		return nil, "", err
-	}
-
-	// Assemble the account manager and supported backends
-	backends := []accounts.Backend{
-		keystore.NewKeyStore(keydir, scryptN, scryptP),
-	}
-
-	return accounts.NewManager(backends...), ephemeral, nil
-}
-
 func accountImport(ctx *cli.Context) error {
 	keyfile := ctx.Args().First()
 	if len(keyfile) == 0 {
@@ -301,7 +257,7 @@ func accountImport(ctx *cli.Context) error {
 	}
 	keyStoreDir = filepath.Join(dataDir, keyStoreDir)
 
-	manager, _, _ := makeAccountManager(keyStoreDir)
+	manager, _, _ := utils.MakeAccountManager(keyStoreDir)
 	ks := manager.Backends(keystore.KeyStoreType)[0].(*keystore.KeyStore)
 
 	passphrase := getPassPhrase("Your new account is locked with a password. Please give a password. Do not forget this password.", true, 0, utils.MakePasswordList(ctx))
@@ -312,3 +268,5 @@ func accountImport(ctx *cli.Context) error {
 	fmt.Printf("Address: {%x}\n", acct.Address)
 	return nil
 }
+
+

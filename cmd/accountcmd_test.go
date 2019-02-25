@@ -11,7 +11,7 @@ import (
 func tmpDatadirWithKeystore(t *testing.T) string {
 	datadir := tmpdir(t)
 	keystore := filepath.Join(datadir, "keystore")
-	source := filepath.Join("..", "accounts", "keystore", "testdata")
+	source := filepath.Join("..", "accounts", "keystore", "testdata", "keystore")
 	if err := cp.CopyAll(keystore, source); err != nil {
 		t.Fatal(err)
 	}
@@ -25,19 +25,20 @@ func TestAccountListEmpty(t *testing.T) {
 
 func TestAccountList(t *testing.T) {
 	datadir := tmpDatadirWithKeystore(t)
+	//keystore := filepath.Join(datadir, "testdata")
 	geth := runGeth(t, "account", "list", "--datadir", datadir)
 	defer geth.ExpectExit()
 	if runtime.GOOS == "windows" {
 		geth.Expect(`
-Account #0: {94cdad6a9c62e418608f8ef5814821e74db3e331} keystore://{{.Datadir}}\keystore\UTC--2019-02-18T04-32-03.186218000Z--94cdad6a9c62e418608f8ef5814821e74db3e331
-Account #1: {f466859ead1932d743d622cb74fc058882e8648a} keystore://{{.Datadir}}\keystore\aaa
+Account #0: {b69569609605b15ff631c3e85de107d862c6f134} keystore://{{.Datadir}}\keystore\UTC--2019-02-15T12-05-05.684713000Z--b69569609605b15ff631c3e85de107d862c6f134
+Account #1: {f466859ead1932d743d622cb74fc058882e8648a} keystore://{{.Datadir}}\keystore\UTC--2019-02-18T04-32-03.186218000Z--94cdad6a9c62e418608f8ef5814821e74db3e331
 Account #2: {289d485d9771714cce91d3393d764e1311907acc} keystore://{{.Datadir}}\keystore\zzz
 `)
 	} else {
 		geth.Expect(`
-Account #0: {94cdad6a9c62e418608f8ef5814821e74db3e331} keystore://{{.Datadir}}/keystore/UTC--2019-02-18T04-32-03.186218000Z--94cdad6a9c62e418608f8ef5814821e74db3e331
-Account #1: {f466859ead1932d743d622cb74fc058882e8648a} keystore://{{.Datadir}}/keystore/aaa
-Account #2: {289d485d9771714cce91d3393d764e1311907acc} keystore://{{.Datadir}}/keystore/zzz
+Account #0: {b69569609605b15ff631c3e85de107d862c6f134} keystore://{{.Datadir}}/keystore/UTC--2019-02-15T12-05-05.684713000Z--b69569609605b15ff631c3e85de107d862c6f134
+Account #1: {94cdad6a9c62e418608f8ef5814821e74db3e331} keystore://{{.Datadir}}/keystore/UTC--2019-02-18T04-32-03.186218000Z--94cdad6a9c62e418608f8ef5814821e74db3e331
+Account #2: {f466859ead1932d743d622cb74fc058882e8648a} keystore://{{.Datadir}}/keystore/aaa
 `)
 	}
 }
@@ -96,7 +97,7 @@ Repeat passphrase: {{.InputLine "foobar"}}
 func TestMakeAccountManager(t *testing.T) {
 	datadir := tmpDatadirWithKeystore(t)
 	keystoreDir := filepath.Join(datadir, "keystore")
-	_, _, err := makeAccountManager(keystoreDir)
+	_, _, err := utils.MakeAccountManager(keystoreDir)
 	if err != nil {
 		utils.Fatalf("Could not make account manager: %v", err)
 	}

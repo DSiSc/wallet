@@ -18,13 +18,14 @@ import (
 	"crypto/ecdsa"
 	"errors"
 	"fmt"
-	"math/big"
-
 	"github.com/DSiSc/craft/types"
 	"github.com/DSiSc/crypto-suite/crypto"
 	"github.com/DSiSc/crypto-suite/crypto/sha3"
-	"github.com/DSiSc/wallet/common"
 	"github.com/DSiSc/crypto-suite/rlp"
+	"github.com/DSiSc/evm-NG/params"
+
+	"github.com/DSiSc/wallet/common"
+	"math/big"
 )
 
 var (
@@ -38,7 +39,7 @@ type sigCache struct {
 	signer Signer
 	from   common.Address
 }
-/*
+
 // MakeSigner returns a Signer based on the given chain config and block number.
 func MakeSigner(config *params.ChainConfig, blockNumber *big.Int) Signer {
 	var signer Signer
@@ -52,7 +53,7 @@ func MakeSigner(config *params.ChainConfig, blockNumber *big.Int) Signer {
 	}
 	return signer
 }
-*/
+
 // SignTx signs the transaction using the given signer and private key
 func SignTx(tx *types.Transaction, s Signer, prv *ecdsa.PrivateKey) (*types.Transaction, error) {
 	h := s.Hash(tx)
@@ -72,6 +73,7 @@ func DefaultTestKey() (*ecdsa.PrivateKey, common.Address) {
     
 	return key, addr
 }
+
 
 // Sender returns the address derived from the signature (V, R, S) using secp256k1
 // elliptic curve and an error if it failed deriving or upon an incorrect

@@ -148,3 +148,4 @@ func drop(slice []Wallet, wallets ...Wallet) []Wallet {
 	}
 	return slice
 }
+
