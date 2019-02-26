@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/DSiSc/wallet/utils"
 	"github.com/docker/docker/pkg/reexec"
 	"io/ioutil"
 	"os"
@@ -29,6 +30,7 @@ type testgeth struct {
 func init() {
 	// Run the app if we've been exec'd as "geth-test" in runGeth.
 	reexec.Register("geth-test", func() {
+		app := utils.NewApp("", "the wallet command line interface")
 		if err := app.Run(os.Args); err != nil {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)

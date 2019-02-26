@@ -91,6 +91,12 @@
 			"checksumSHA1": "GS83dscwl/xqUgWCj+6k97Ej7UE=",
 			"path": "golang.org/x/sys/unix",
 			"revision": ""
+		},
+		{
+			"checksumSHA1": "9gypWnVZJEaH3jMK9KqOp4xgQD4=",
+			"path": "gopkg.in/check.v1",
+			"revision": "788fd78401277ebd861206a03c884797c6ec5541",
+			"revisionTime": "2018-06-28T17:31:08Z"
 		}
 	],
 	"rootPath": "github.com/DSiSc/wallet"

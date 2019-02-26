@@ -17,7 +17,12 @@ import (
 )
 
 // NewApp creates an app with sane defaults.
+var app  *cli.App = nil
+
 func NewApp(gitCommit, usage string) *cli.App {
+	if app != nil {
+		return app
+	}
 	app := cli.NewApp()
 	app.Name = filepath.Base(os.Args[0])
 	app.Author = ""
