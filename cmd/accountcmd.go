@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ import (
 
 var (
 
-	accountCommand = cli.Command{
+	AccountCommand = cli.Command{
 		Name:     "account",
 		Usage:    "Manage accounts",
 		Category: "ACCOUNT COMMANDS",
@@ -22,7 +22,7 @@ account, create a new account or update an existing account.`,
 			{
 				Name:   "list",
 				Usage:  "Print summary of existing accounts",
-				Action: utils.MigrateFlags(accountList),
+				Action: utils.MigrateFlags(AccountList),
 				Flags: []cli.Flag{
 					utils.DataDirFlag,
 					utils.KeyStoreDirFlag,
@@ -69,7 +69,7 @@ account, create a new account or update an existing account.`,
 	}
 )
 
-func accountList(ctx *cli.Context) error {
+func AccountList(ctx *cli.Context) error {
 	var index int
 
 	dataDir := ctx.GlobalString(utils.DataDirFlag.Name)
