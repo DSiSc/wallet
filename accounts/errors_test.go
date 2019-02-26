@@ -1,12 +1,14 @@
 package accounts
 
 import (
+	"fmt"
 	"testing"
 )
 
 
 func TestAuthNeededError(t *testing.T) {
 	ErrLocked  := NewAuthNeededError("password or unlock")
-	ErrLocked.Error()
+	str := ErrLocked.Error()
+	fmt.Print(str)
 }
 
