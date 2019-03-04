@@ -1,20 +1,20 @@
 package utils
 
 import (
-	"encoding/json"
+	"flag"
 	"fmt"
-	cmn "github.com/DSiSc/apigateway/common"
-	"github.com/DSiSc/apigateway/rpc/lib/types"
-	"github.com/DSiSc/craft/log"
 	"github.com/DSiSc/craft/types"
 	"github.com/DSiSc/wallet/accounts"
 	"github.com/DSiSc/wallet/accounts/keystore"
+	"github.com/DSiSc/wallet/common"
+	local "github.com/DSiSc/wallet/core/types"
+	web3cmn "github.com/alanchchen/web3go/common"
+	"github.com/alanchchen/web3go/provider"
+	"github.com/alanchchen/web3go/rpc"
+	"github.com/alanchchen/web3go/web3"
 	"io/ioutil"
-	"net/http"
 	"os"
 	"path/filepath"
-	"strconv"
-	"strings"
 )
 
 
@@ -92,38 +92,96 @@ func GetUnlockedKeyByDir(address string, passphrase string, keystoreDir string) 
 }
 
 //Send a signed transaction
-func SendTransaction(tx *types.Transaction) (string, error) {
-	//construct payload
-	from := fmt.Sprintf("0x%x", *(tx.Data.From))
-	to := from
-	gas := "0x" + strconv.FormatInt(int64(tx.Data.GasLimit),16)
-	gasprice := "0x" + tx.Data.Price.String()
-	value := "0x" + tx.Data.Amount.String()
-	nonce := "0x" + strconv.FormatInt(int64(tx.Data.AccountNonce),16)
-	data := "" + string(tx.Data.Payload)
-	payload := fmt.Sprintf(`{"jsonrpc": "2.0", "method": "eth_sendTransaction", "id": "0", "params": [{"from": "%s", "to": "%s","gas": "%s","gasPrice": "%s", "value": "%s","nonce": "%s","data": "%s"}]}`,
-		from, to, gas, gasprice, value, nonce, data)
+func SendTransaction(tx *types.Transaction) (common.Hash, error) {
+	////construct payload
+	//from := fmt.Sprintf("0x%x", *(tx.Data.From))
+	//to := from
+	//gas := "0x" + strconv.FormatInt(int64(tx.Data.GasLimit),16)
+	//gasprice := "0x" + tx.Data.Price.String()
+	//value := "0x" + tx.Data.Amount.String()
+	//nonce := "0x" + strconv.FormatInt(int64(tx.Data.AccountNonce),16)
+	//data := "" + string(tx.Data.Payload)
+	//payload := fmt.Sprintf(`{"jsonrpc": "2.0", "method": "eth_sendTransaction", "id": "0", "params": [{"from": "%s", "to": "%s","gas": "%s","gasPrice": "%s", "value": "%s","nonce": "%s","data": "%s"}]}`,
+	//	from, to, gas, gasprice, value, nonce, data)
+	//
+	////new and send request
+	//req, _ := http.NewRequest("POST", "http://127.0.0.1:47768/", strings.NewReader(payload))
+	//client := http.Client{}
+	//resp, err := client.Do(req)
+	//if err != nil {
+	//	log.Error("http send request failed: %v", err)
+	//	return "", err
+	//}
+	//
+	////resolve response
+	//blob, err := ioutil.ReadAll(resp.Body)
+	//if err != nil {
+	//	log.Error("read response msg has failed: %v", err)
+	//	return "", err
+	//}
+	//recv := new(rpctypes.RPCResponse)
+	//json.Unmarshal(blob, recv)
+	//
+	////var result cmn.Hash
+	////json.Unmarshal(recv.Result, &result)
+	////txHash := fmt.Sprintf("0x%x\n", result)
+	//return "", nil
 
-	//new and send request
-	req, _ := http.NewRequest("POST", "http://127.0.0.1:47768/", strings.NewReader(payload))
-	client := http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Error("http send request failed: %v", err)
-		return "", err
+	hostname := flag.String("hostname", "127.0.0.1", "The ethereum client RPC host")
+	port := flag.String("port", "47768", "The ethereum client RPC port")
+	verbose := flag.Bool("verbose", true, "Print verbose messages")
+
+	if *verbose {
+		fmt.Printf("Connect to %s:%s\n", *hostname, *port)
 	}
 
-	//resolve response
-	blob, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Error("read response msg has failed: %v", err)
-		return "", err
-	}
-	recv := new(rpctypes.RPCResponse)
-	json.Unmarshal(blob, recv)
+	provider := provider.NewHTTPProvider(*hostname+":"+*port, rpc.GetDefaultMethod())
+	web3 := web3.NewWeb3(provider)
 
-	var result cmn.Hash
-	json.Unmarshal(recv.Result, &result)
-	txHash := fmt.Sprintf("0x%x\n", result)
-	return txHash, nil
+	//from := fmt.Sprintf("0x%x", *(tx.Data.From))
+	//to := fmt.Sprintf("0x%x", *(tx.Data.Recipient))
+	//gas := big.NewInt(int64(tx.Data.GasLimit))
+
+
+	//req := &web3cmn.TransactionRequest{
+	//	From:     web3cmn.NewAddress(web3cmn.HexToBytes(from)),
+	//	To:       web3cmn.NewAddress(web3cmn.HexToBytes(to)),
+	//	Gas:      gas,
+	//	GasPrice: tx.Data.Price,
+	//	Value:    tx.Data.Amount,
+	//	Data:     tx.Data.Payload,
+	//}
+	req := &web3cmn.TransactionRequest{
+		From:     "0xb60e8dd61c5d32be8058bb8eb970870f07233155",
+		To:       "0xd46e8dd67c5d32be8058bb8eb970870f07244567",
+		Nonce:    "0x1",
+		Gas:      "0x0",
+		GasPrice: "0x0",
+		Value:    "0x0",
+		Data:     "",
+	}
+
+	hash, err := web3.Eth.SendTransaction(req)
+
+	return common.Hash(hash), err
+
 }
+
+func SendRawTransaction(tx *types.Transaction) (common.Hash, error) {
+	hostname := flag.String("hostname", "127.0.0.1", "The ethereum client RPC host")
+	port := flag.String("port", "47768", "The ethereum client RPC port")
+	verbose := flag.Bool("verbose", false, "Print verbose messages")
+
+	if *verbose {
+		fmt.Printf("Connect to %s:%s\n", *hostname, *port)
+	}
+
+	provider := provider.NewHTTPProvider(*hostname+":"+*port, rpc.GetDefaultMethod())
+	web3 := web3.NewWeb3(provider)
+
+	txBytes, _ := local.EncodeToRLP(tx)
+	hash, err := web3.Eth.SendRawTransaction(txBytes)
+
+	return common.Hash(hash), err
+}
+

@@ -15,6 +15,8 @@
 package types
 
 import (
+	"github.com/DSiSc/crypto-suite/rlp"
+	"io"
 	"math/big"
 
 	"github.com/DSiSc/craft/types"
@@ -101,3 +103,16 @@ func WithSignature(tx *types.Transaction, signer Signer, sig []byte) (*types.Tra
 	return cpy, nil
 
 }
+
+// EncodeRLP implements rlp.Encoder
+func EncodeRLP(tx *types.Transaction,w io.Writer) error {
+	return rlp.Encode(w, tx.Data)
+}
+
+// EncodeToBytes returns the RLP encoding of val.
+func EncodeToRLP(tx *types.Transaction) ([]byte, error){
+	return rlp.EncodeToBytes(tx.Data)
+}
+
+
+
