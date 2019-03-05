@@ -111,8 +111,5 @@ func EncodeRLP(tx *types.Transaction,w io.Writer) error {
 
 // EncodeToBytes returns the RLP encoding of val.
 func EncodeToRLP(tx *types.Transaction) ([]byte, error){
-	return rlp.EncodeToBytes(tx.Data)
+	return rlp.EncodeToBytes(tx)
 }
-
-
-

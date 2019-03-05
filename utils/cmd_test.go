@@ -5,6 +5,7 @@ import (
 	"github.com/DSiSc/wallet/common"
 	local "github.com/DSiSc/wallet/core/types"
 	"github.com/cespare/cp"
+	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"math/big"
 	"path/filepath"
@@ -73,5 +74,10 @@ func TestSendRawTransaction(t *testing.T) {
 		fmt.Println("send raw tx has failed, ", err)
 		return
 	}
-	fmt.Println(txHash)
+
+	expectHash := common.Hash{
+		105, 24, 76, 225, 150, 125, 28, 144, 68, 17, 185, 70, 162, 62, 105, 42,
+		16, 46, 238, 27, 148, 229, 81, 36, 136, 115, 27, 151, 68, 77, 195, 216,
+	}
+	assert.Equal(t, expectHash, txHash)
 }
