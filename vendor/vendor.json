@@ -82,12 +82,6 @@
 			"revisionTime": "2019-01-09T08:30:14Z"
 		},
 		{
-			"checksumSHA1": "dU/sAmfIZL/pvpHP3o9x+tuTUTY=",
-			"path": "github.com/tonnerre/golang-go.crypto/sha3",
-			"revision": "9bbb332f040b171b2fb4e08c53a3db3b3f6633c0",
-			"revisionTime": "2014-02-19T19:51:49Z"
-		},
-		{
 			"checksumSHA1": "KRlS8eQZGK1oYVCOkIvcMDXabxk=",
 			"path": "github.com/urfave/cli",
 			"revision": "b67dcf995b6a7b7f14fad5fcb7cc5441b05e814b",
