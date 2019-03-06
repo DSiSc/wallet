@@ -83,7 +83,7 @@ func TestSendRawTransaction(t *testing.T) {
 	txHash, err := SendRawTransaction(tx)
 	if err != nil {
 		fmt.Println("send raw tx has failed, ", err)
-		return
+		//return
 	}
 
 	expectHash := common.Hash{
