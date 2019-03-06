@@ -30,11 +30,22 @@ func tmpdir(t *testing.T) string {
 	return dir
 }
 
+func TestStatusOK(t *testing.T) {
+	result := statusOK(201)
+	assert.Equal(t,true, result)
+
+	result = statusOK(300)
+	assert.Equal(t,false, result)
+}
+
 func TestGetUnlockedKey(t *testing.T) {
 	datadir := tmpDatadirWithKeystore(t)
 	ks := filepath.Join(datadir, "keystore")
-	ac, key, err := GetUnlockedKeyByDir("94cdad6a9c62e418608f8ef5814821e74db3e331", "", ks)
-	fmt.Print(ac, key, err)
+	_, _, err := GetUnlockedKey("94cdad6a9c62e418608f8ef5814821e74db3e331", "")
+	assert.NotNil(t, err)
+
+	_, _, err = GetUnlockedKeyByDir("94cdad6a9c62e418608f8ef5814821e74db3e331", "", ks)
+	assert.Equal(t, nil, err)
 }
 
 func TestSendTransaction(t *testing.T) {
@@ -81,3 +92,21 @@ func TestSendRawTransaction(t *testing.T) {
 	}
 	assert.Equal(t, expectHash, txHash)
 }
+
+func TestMakeAccountManager(t *testing.T) {
+	datadir := tmpDatadirWithKeystore(t)
+	ks := filepath.Join(datadir, "keystore")
+
+	am, _, _ := MakeAccountManager(ks)
+
+	assert.NotNil(t, am)
+}
+
+func TestAccountConfig(t *testing.T) {
+	datadir := tmpDatadirWithKeystore(t)
+	ks := filepath.Join(datadir, "keystore")
+
+	_, _, _, err := AccountConfig(ks)
+	assert.Equal(t, nil, err)
+}
+
