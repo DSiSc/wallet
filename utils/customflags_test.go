@@ -28,5 +28,4 @@ func TestDirectoryFlagFunc(t *testing.T) {
 
 	assert.Equal(t, "--datadir \"keystore\"	data directory", dirFlag.String())
 	assert.Equal(t, "datadir", dirFlag.GetName())
-
 }

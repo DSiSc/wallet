@@ -166,35 +166,6 @@ func (ks *KeyStore) refreshWallets() {
 	}*/
 }
 
-
-
-// updater is responsible for maintaining an up-to-date list of wallets stored in
-// the keystore, and for firing wallet addition/removal events. It listens for
-// account change events from the underlying account cache, and also periodically
-// forces a manual refresh (only triggers for systems where the filesystem notifier
-// is not running).
-func (ks *KeyStore) updater() {
-	/*
-	for {
-		// Wait for an account update or a refresh timeout
-		select {
-		case <-ks.changes:
-		case <-time.After(walletRefreshCycle):
-		}
-		// Run the wallet refresher
-		ks.refreshWallets()
-
-		// If all our subscribers left, stop the updater
-		ks.mu.Lock()
-		if ks.updateScope.Count() == 0 {
-			ks.updating = false
-			ks.mu.Unlock()
-			return
-		}
-		ks.mu.Unlock()
-	}*/
-}
-
 // HasAddress reports whether a key with the given address is present.
 func (ks *KeyStore) HasAddress(addr common.Address) bool {
 	return ks.cache.hasAddress(addr)

@@ -14,6 +14,7 @@ import (
 	"strings"
 	"testing"
 	"time"
+	"github.com/stretchr/testify/assert"
 )
 
 var testSigData = make([]byte, 32)
@@ -221,6 +222,107 @@ func TestSignRace(t *testing.T) {
 		time.Sleep(1 * time.Millisecond)
 	}
 	t.Errorf("Account did not lock within the timeout")
+}
+
+func TestWallets(t *testing.T) {
+	dir, ks := tmpKeyStore(t, true)
+	defer os.RemoveAll(dir)
+
+	ks.Wallets()
+}
+
+func TestSignTxWithPassphrase(t *testing.T) {
+	dir, ks := tmpKeyStore(t, true)
+	defer os.RemoveAll(dir)
+
+	pass := "" // not used but required by API
+	a1, err := ks.NewAccount(pass)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ks.Unlock(a1, ""); err != nil {
+		t.Fatal(err)
+	}
+
+	if _, err := ks.SignTxWithPassphrase(accounts.Account{Address: a1.Address},
+			"", &types.Transaction{}, big.NewInt(10)); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUnlock(t *testing.T) {
+	dir, ks := tmpKeyStore(t, true)
+	defer os.RemoveAll(dir)
+
+	pass := ""
+	acc, err := ks.NewAccount(pass)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	//Unlock the addr
+	ks.Unlock(acc, pass)
+	if _, unlocked := ks.unlocked[acc.Address]; !unlocked {
+		t.Fatal("expected account to be unlock")
+	}
+
+	//Lock the addr
+	ks.Lock(acc.Address)
+	if _, unlocked := ks.unlocked[acc.Address]; unlocked {
+		t.Fatal("expected account to be locked")
+	}
+
+}
+
+func TestExport(t *testing.T) {
+	dir, ks := tmpKeyStore(t, true)
+	defer os.RemoveAll(dir)
+
+	pass := ""
+	acc, err := ks.NewAccount(pass)
+	assert.Equal(t,nil, err)
+
+	jsonBytes, err1 := ks.Export(acc, pass, pass)
+	assert.Equal(t,nil, err1)
+
+	acc1, err2 := ks.Import(jsonBytes, pass, pass)
+	assert.Equal(t, nil, err2)
+	assert.Equal(t, acc.Address, acc1.Address)
+
+
+}
+
+func TestImportECDSA(t *testing.T) {
+	dir, ks := tmpKeyStore(t, true)
+	defer os.RemoveAll(dir)
+
+	pass := ""
+	acc, err := ks.NewAccount(pass)
+	assert.Equal(t, nil, err)
+
+	keyjson, err := ioutil.ReadFile(acc.URL.Path)
+	assert.Equal(t, nil, err)
+
+	//delete account
+	err = ks.Delete(acc, pass)
+	assert.Equal(t, nil, err)
+
+	key, err := DecryptKey(keyjson, pass)
+	assert.Equal(t, nil, err)
+
+	//Get the privatekey
+	_, err1 := ks.ImportECDSA(key.PrivateKey, "")
+	assert.Equal(t, nil, err1)
+}
+
+func TestImportPreSaleKey(t *testing.T) {
+	dir, ks := tmpKeyStore(t, true)
+	defer os.RemoveAll(dir)
+
+	keyJons := make([]byte, 20)
+
+	_, err := ks.ImportPreSaleKey(keyJons, "")
+	assert.Equal(t, nil, err)
 }
 
 func tmpKeyStore(t *testing.T, encrypted bool) (string, *KeyStore) {
