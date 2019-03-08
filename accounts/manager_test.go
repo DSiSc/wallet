@@ -42,7 +42,7 @@ func TestManager_Wallets(t *testing.T) {
 	assert.NotNil(t, mana)
 
 	wallets := mana.Wallets()
-	assert.Equal(t, nil, wallets)
+	assert.NotNil(t, wallets)
 }
 
 func TestManager_Wallet(t *testing.T) {
