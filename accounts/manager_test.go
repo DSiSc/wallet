@@ -2,6 +2,7 @@ package accounts
 
 import (
 	"github.com/cespare/cp"
+	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"path/filepath"
 	"testing"
@@ -29,5 +30,39 @@ func TestMakeAccountManager(t *testing.T) {
 	// Assemble the account manager and supported backends
 	backends := []Backend{ }
 
-	NewManager(backends...)
+	mana := NewManager(backends...)
+	assert.NotNil(t, mana)
+}
+
+func TestManager_Wallets(t *testing.T) {
+	// Assemble the account manager and supported backends
+	backends := []Backend{ }
+
+	mana := NewManager(backends...)
+	assert.NotNil(t, mana)
+
+	wallets := mana.Wallets()
+	assert.Equal(t, nil, wallets)
+}
+
+func TestManager_Wallet(t *testing.T) {
+	// Assemble the account manager and supported backends
+	backends := []Backend{ }
+
+	mana := NewManager(backends...)
+	assert.NotNil(t, mana)
+
+	mana.Wallet("")
+}
+
+func TestManager_Find(t *testing.T) {
+	// Assemble the account manager and supported backends
+	backends := []Backend{ }
+
+	mana := NewManager(backends...)
+	assert.NotNil(t, mana)
+
+	acc := Account{}
+	_, err := mana.Find(acc)
+	assert.Equal(t, ErrUnknownAccount, err)
 }
