@@ -160,22 +160,10 @@ func accountCreate(ctx *cli.Context) error {
 		keyStoreDir =  keystore.KeyStoreScheme
 	}
 	keyStoreDir = filepath.Join(dataDir, keyStoreDir)
-
-	scryptN, scryptP, keydir, err := utils.AccountConfig(keyStoreDir)
-
-	if err != nil {
-		utils.Fatalf("Failed to read configuration: %v", err)
-	}
-
 	password := getPassPhrase("Your new account is locked with a password. Please give a password. Do not forget this password.", true, 0, utils.MakePasswordList(ctx))
+	_, err := utils.NewAccount(keyStoreDir, password)
 
-	address, err := keystore.StoreKey(keydir, password, scryptN, scryptP)
-
-	if err != nil {
-		utils.Fatalf("Failed to create account: %v", err)
-	}
-	fmt.Printf("Address: {%x}\n", address)
-	return nil
+	return err
 }
 
 func accountUpdate(ctx *cli.Context) error {

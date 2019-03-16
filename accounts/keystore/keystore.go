@@ -6,10 +6,10 @@ import (
 	"errors"
 	"fmt"
 	"github.com/DSiSc/craft/types"
-	local "github.com/DSiSc/wallet/core/types"
 	"github.com/DSiSc/crypto-suite/crypto"
 	"github.com/DSiSc/wallet/accounts"
 	"github.com/DSiSc/wallet/common"
+	local "github.com/DSiSc/wallet/core/types"
 	"math/big"
 	"os"
 	"path/filepath"
@@ -221,15 +221,15 @@ func (ks *KeyStore) SignTx(a accounts.Account, tx *types.Transaction, chainID *b
 	ks.mu.RLock()
 	defer ks.mu.RUnlock()
 
+
+
 	unlockedKey, found := ks.unlocked[a.Address]
 	if !found {
 		return nil, ErrLocked
 	}
-	// Depending on the presence of the chain ID, sign with EIP155 or homestead
-	if chainID != nil {
-		return local.SignTx(tx, local.NewEIP155Signer(chainID), unlockedKey.PrivateKey)
-	}
-	return nil, nil
+
+	return local.SignTx(tx, local.NewEIP155Signer(chainID), unlockedKey.PrivateKey)
+
 }
 
 // SignHashWithPassphrase signs hash if the private key matching the given address

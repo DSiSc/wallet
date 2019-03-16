@@ -37,6 +37,13 @@ func TestStatusOK(t *testing.T) {
 	result = statusOK(300)
 	assert.Equal(t,false, result)
 }
+func TestFind(t *testing.T) {
+	datadir := tmpDatadirWithKeystore(t)
+	ks := filepath.Join(datadir, "keystore")
+	acc, err := FindByDir("94cdad6a9c62e418608f8ef5814821e74db3e331", ks)
+	assert.Equal(t, nil, err)
+	assert.NotNil(t, acc)
+}
 
 func TestGetUnlockedKey(t *testing.T) {
 	datadir := tmpDatadirWithKeystore(t)
