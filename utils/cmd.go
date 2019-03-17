@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/DSiSc/craft/types"
+	"github.com/DSiSc/validator/tools"
 	"github.com/DSiSc/wallet/accounts"
 	"github.com/DSiSc/wallet/accounts/keystore"
 	"github.com/DSiSc/wallet/common"
@@ -12,7 +13,7 @@ import (
 	"github.com/DSiSc/web3go/provider"
 	"github.com/DSiSc/web3go/rpc"
 	"github.com/DSiSc/web3go/web3"
-	"github.com/DSiSc/validator/tools"
+	"github.com/pkg/errors"
 	"io/ioutil"
 	"math/big"
 	"os"
@@ -220,7 +221,6 @@ func SendRawTransaction(tx *types.Transaction) (common.Hash, error) {
 	hostname := flag.String("hostname", "127.0.0.1", "The ethereum client RPC host")
 	port := flag.String("port", "47768", "The ethereum client RPC port")
 	verbose := flag.Bool("verbose", false, "Print verbose messages")
-
 	if *verbose {
 		fmt.Printf("Connect to %s:%s\n", *hostname, *port)
 	}
@@ -234,22 +234,25 @@ func SendRawTransaction(tx *types.Transaction) (common.Hash, error) {
 	return common.Hash(hash), err
 }
 
-func SendRawTransactionWeb3(txBytesStr string) (common.Hash, error) {
-	hostname := flag.String("hostname", "127.0.0.1", "The ethereum client RPC host")
-	port := flag.String("port", "47768", "The ethereum client RPC port")
-	verbose := flag.Bool("verbose", false, "Print verbose messages")
-
-	if *verbose {
-		fmt.Printf("Connect to %s:%s\n", *hostname, *port)
+func SendRawTransactionWeb3(web *web3.Web3, txBytesStr string) (common.Hash, error) {
+	if web == nil {
+		return common.Hash{}, errors.New("sendRawTransactionWeb3 has call error web is nil")
 	}
-
-	provider := provider.NewHTTPProvider(*hostname+":"+*port, rpc.GetDefaultMethod())
-	web3 := web3.NewWeb3(provider)
-
 	bytes := tools.FromHex(txBytesStr)
-	hash, err := web3.Eth.SendRawTransaction(bytes)
+	hash, err := web.Eth.SendRawTransaction(bytes)
 
 	return common.Hash(hash), err
+}
+
+func NewWeb3(hostname string, port string, verbose bool) (*web3.Web3, error){
+	if verbose {
+		fmt.Printf("Connect to %s:%s\n", hostname, port)
+	}
+
+	provider := provider.NewHTTPProvider(hostname+":"+port, rpc.GetDefaultMethod())
+	web3 := web3.NewWeb3(provider)
+	return web3, nil
+
 }
 
 func NewAccount(keyStoreDir string, password string) (common.Address, error) {

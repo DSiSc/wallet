@@ -258,6 +258,7 @@ func (ks *KeyStore) SignTxWithPassphrase(a accounts.Account, passphrase string, 
 	if chainID != nil {
 		return local.SignTx(tx, local.NewEIP155Signer(chainID), key.PrivateKey)
 	}
+
 	return local.SignTx(tx, local.HomesteadSigner{}, key.PrivateKey)
 }
 
