@@ -18,14 +18,14 @@ import (
 	"crypto/ecdsa"
 	"errors"
 	"fmt"
-	"math/big"
-
 	"github.com/DSiSc/craft/types"
 	"github.com/DSiSc/crypto-suite/crypto"
 	"github.com/DSiSc/crypto-suite/crypto/sha3"
+	"github.com/DSiSc/crypto-suite/rlp"
+	"github.com/DSiSc/evm-NG/params"
+
 	"github.com/DSiSc/wallet/common"
-	"github.com/ethereum/go-ethereum/params"
-	"github.com/ethereum/go-ethereum/rlp"
+	"math/big"
 )
 
 var (
@@ -73,6 +73,7 @@ func DefaultTestKey() (*ecdsa.PrivateKey, common.Address) {
     
 	return key, addr
 }
+
 
 // Sender returns the address derived from the signature (V, R, S) using secp256k1
 // elliptic curve and an error if it failed deriving or upon an incorrect

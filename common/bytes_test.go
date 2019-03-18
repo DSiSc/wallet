@@ -18,6 +18,8 @@ package common
 
 import (
 	"bytes"
+	"fmt"
+	"github.com/stretchr/testify/assert"
 	"testing"
 
 	checker "gopkg.in/check.v1"
@@ -102,4 +104,37 @@ func TestNoPrefixShortHexOddLength(t *testing.T) {
 	if !bytes.Equal(expected, result) {
 		t.Errorf("Expected %x got %x", expected, result)
 	}
+}
+
+func TestToHex(t *testing.T) {
+	testBytes := []byte {
+		105, 24, 76, 225, 150, 125, 28, 144, 68, 17, 185, 70, 162, 62, 105, 42,
+		16, 46, 238, 27, 148, 229, 81, 36, 136, 115, 27, 151, 68, 77, 195, 216,
+	}
+	strHex := "0x69184ce1967d1c904411b946a23e692a102eee1b94e5512488731b97444dc3d8"
+	assert.Equal(t, strHex, ToHex(testBytes))
+
+	testBytes = []byte {}
+	strHex = "0x0"
+	assert.Equal(t, strHex, ToHex(testBytes))
+}
+
+func TestCopyBytes(t *testing.T) {
+	originBytes := []byte {
+		105, 24, 76, 225, 150, 125, 28, 144, 68, 17, 185, 70, 162, 62, 105, 42,
+		16, 46, 238, 27, 148, 229, 81, 36, 136, 115, 27, 151, 68, 77, 195, 216,
+	}
+	copiedBytes := CopyBytes(originBytes)
+	assert.Equal(t, originBytes, copiedBytes)
+
+	originBytes = nil
+	copiedBytes = CopyBytes(originBytes)
+	assert.Equal(t, originBytes, copiedBytes)
+
+}
+
+func TestHex2BytesFixed(t *testing.T) {
+	str := "0x69184ce1967d1c904411b946a23e692a102eee1b94e5512488731b97444dc3d8"
+	flen := len(str)
+	fmt.Println(Hex2BytesFixed(str, flen))
 }
