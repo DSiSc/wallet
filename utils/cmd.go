@@ -103,7 +103,6 @@ func SignTxByPassWord(tx *types.Transaction, password string) (*types.Transactio
 	addr := common.Address(*(tx.Data.From))
 	address := addr.Hex()
 
-	fmt.Println("address: ", address)
 	return SignTxByDir(address, tx, nil, keyStoreDir, &password)
 }
 
