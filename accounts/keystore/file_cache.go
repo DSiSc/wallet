@@ -45,7 +45,6 @@ func (fc *fileCache) scan(keyDir string) (mapset.Set, mapset.Set, mapset.Set, er
 	if err != nil {
 		return nil, nil, nil, err
 	}
-	//temp	t1 := time.Now()
 
 	fc.mu.Lock()
 	defer fc.mu.Unlock()
@@ -59,7 +58,6 @@ func (fc *fileCache) scan(keyDir string) (mapset.Set, mapset.Set, mapset.Set, er
 		path := filepath.Join(keyDir, fi.Name())
 		// Skip any non-key files from the folder
 		if nonKeyFile(fi) {
-	//temp		log.Info("Ignoring file on account scan", "path", path)
 			continue
 		}
 		// Gather the set of all and fresly modified files
@@ -73,7 +71,6 @@ func (fc *fileCache) scan(keyDir string) (mapset.Set, mapset.Set, mapset.Set, er
 			newLastMod = modified
 		}
 	}
-	//temp	t2 := time.Now()
 
 	// Update the tracked files and return the three sets
 	deletes := fc.all.Difference(all)   // Deletes = previous - current
@@ -81,7 +78,6 @@ func (fc *fileCache) scan(keyDir string) (mapset.Set, mapset.Set, mapset.Set, er
 	updates := mods.Difference(creates) // Updates = modified - creates
 
 	fc.all, fc.lastMod = all, newLastMod
-	//temp	t3 := time.Now()
 
 	// Report on the scanning stats and return
 	//temp	log.Debug("FS scan times", "list", t1.Sub(t0), "set", t2.Sub(t1), "diff", t3.Sub(t2))

@@ -63,9 +63,6 @@ type KeyStore struct {
 	unlocked map[common.Address]*unlocked // Currently unlocked account (decrypted private keys)
 
 	wallets     []accounts.Wallet       // Wallet wrappers around the individual key files
-	//updateFeed  event.Feed              // Event feed to notify wallet additions/removals
-	//updateScope event.SubscriptionScope // Subscription scope tracking current live listeners
-	//updating    bool                    // Whether the event notification loop is running
 
 	mu sync.RWMutex
 }
@@ -158,12 +155,6 @@ func (ks *KeyStore) refreshWallets() {
 	}
 	ks.wallets = wallets
 	ks.mu.Unlock()
-
-	// Fire all wallet events and return
-	/*
-	for _, event := range events {
-		//ks.updateFeed.Send(event)
-	}*/
 }
 
 // HasAddress reports whether a key with the given address is present.
@@ -425,13 +416,6 @@ func (ks *KeyStore) Update(a accounts.Account, passphrase, newPassphrase string)
 // ImportPreSaleKey decrypts the given Ethereum presale wallet and stores
 // a key file in the key directory. The key file is encrypted with the same passphrase.
 func (ks *KeyStore) ImportPreSaleKey(keyJSON []byte, passphrase string) (accounts.Account, error) {
-/*	a, _, err := importPreSaleKey(ks.storage, keyJSON, passphrase)
-	if err != nil {
-		return a, err
-	}
-	ks.cache.add(a)
-	ks.refreshWallets()
-	return a, nil*/
 	return accounts.Account{}, nil
 }
 
