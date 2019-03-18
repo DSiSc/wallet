@@ -11,3 +11,4 @@ github.com/DSiSc/monkey:master
 github.com/DSiSc/evm-NG:master
 github.com/DSiSc/apigateway:master
 github.com/DSiSc/web3go:master
+github.com/urfave/cli:master
