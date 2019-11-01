@@ -32,10 +32,10 @@ func tmpdir(t *testing.T) string {
 
 func TestStatusOK(t *testing.T) {
 	result := statusOK(201)
-	assert.Equal(t,true, result)
+	assert.Equal(t, true, result)
 
 	result = statusOK(300)
-	assert.Equal(t,false, result)
+	assert.Equal(t, false, result)
 }
 func TestFind(t *testing.T) {
 	datadir := tmpDatadirWithKeystore(t)
@@ -91,4 +91,3 @@ func TestAccountConfig(t *testing.T) {
 	_, _, _, err := AccountConfig(ks)
 	assert.Equal(t, nil, err)
 }
-

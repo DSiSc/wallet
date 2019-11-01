@@ -1,7 +1,7 @@
 package accounts
 
 import (
-"testing"
+	"testing"
 )
 
 func TestURLParsing(t *testing.T) {
@@ -34,7 +34,6 @@ func TestURLString(t *testing.T) {
 	}
 }
 
-
 func TestURLMarshalJSON(t *testing.T) {
 	url := URL{Scheme: "https", Path: "ethereum.org"}
 	json, err := url.MarshalJSON()
@@ -45,7 +44,6 @@ func TestURLMarshalJSON(t *testing.T) {
 		t.Errorf("expected: %v, got: %v", "\"https://ethereum.org\"", string(json))
 	}
 }
-
 
 func TestURLUnmarshalJSON(t *testing.T) {
 	url := &URL{}

@@ -107,20 +107,20 @@ func TestNoPrefixShortHexOddLength(t *testing.T) {
 }
 
 func TestToHex(t *testing.T) {
-	testBytes := []byte {
+	testBytes := []byte{
 		105, 24, 76, 225, 150, 125, 28, 144, 68, 17, 185, 70, 162, 62, 105, 42,
 		16, 46, 238, 27, 148, 229, 81, 36, 136, 115, 27, 151, 68, 77, 195, 216,
 	}
 	strHex := "0x69184ce1967d1c904411b946a23e692a102eee1b94e5512488731b97444dc3d8"
 	assert.Equal(t, strHex, ToHex(testBytes))
 
-	testBytes = []byte {}
+	testBytes = []byte{}
 	strHex = "0x0"
 	assert.Equal(t, strHex, ToHex(testBytes))
 }
 
 func TestCopyBytes(t *testing.T) {
-	originBytes := []byte {
+	originBytes := []byte{
 		105, 24, 76, 225, 150, 125, 28, 144, 68, 17, 185, 70, 162, 62, 105, 42,
 		16, 46, 238, 27, 148, 229, 81, 36, 136, 115, 27, 151, 68, 77, 195, 216,
 	}

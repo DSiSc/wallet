@@ -28,7 +28,7 @@ func tmpDatadirWithKeystore(t *testing.T) string {
 
 func TestMakeAccountManager(t *testing.T) {
 	// Assemble the account manager and supported backends
-	backends := []Backend{ }
+	backends := []Backend{}
 
 	mana := NewManager(backends...)
 	assert.NotNil(t, mana)
@@ -36,7 +36,7 @@ func TestMakeAccountManager(t *testing.T) {
 
 func TestManager_Wallets(t *testing.T) {
 	// Assemble the account manager and supported backends
-	backends := []Backend{ }
+	backends := []Backend{}
 
 	mana := NewManager(backends...)
 	assert.NotNil(t, mana)
@@ -47,7 +47,7 @@ func TestManager_Wallets(t *testing.T) {
 
 func TestManager_Wallet(t *testing.T) {
 	// Assemble the account manager and supported backends
-	backends := []Backend{ }
+	backends := []Backend{}
 
 	mana := NewManager(backends...)
 	assert.NotNil(t, mana)
@@ -57,7 +57,7 @@ func TestManager_Wallet(t *testing.T) {
 
 func TestManager_Find(t *testing.T) {
 	// Assemble the account manager and supported backends
-	backends := []Backend{ }
+	backends := []Backend{}
 
 	mana := NewManager(backends...)
 	assert.NotNil(t, mana)

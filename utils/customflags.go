@@ -49,7 +49,6 @@ func eachName(longName string, fn func(string)) {
 	}
 }
 
-
 // called by cli library, grabs variable from environment (if in env)
 // and adds variable to flag set for parsing.
 func (self DirectoryFlag) Apply(set *flag.FlagSet) {

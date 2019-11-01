@@ -20,10 +20,10 @@ func TestDirectoryFlagFunc(t *testing.T) {
 	err := dir.Set(value)
 	assert.Equal(t, nil, err)
 
-	dirFlag := DirectoryFlag {
-		Name:	"datadir",
-		Usage:	"data directory",
-		Value:	DirectoryString{"keystore"},
+	dirFlag := DirectoryFlag{
+		Name:  "datadir",
+		Usage: "data directory",
+		Value: DirectoryString{"keystore"},
 	}
 
 	assert.Equal(t, "--datadir \"keystore\"	data directory", dirFlag.String())

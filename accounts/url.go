@@ -12,7 +12,6 @@ type URL struct {
 	Path   string // Path for the backend to identify a unique entity
 }
 
-
 // parseURL converts a user supplied URL into the accounts specific structure.
 func parseURL(url string) (URL, error) {
 	parts := strings.Split(url, "://")

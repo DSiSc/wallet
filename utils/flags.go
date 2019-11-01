@@ -6,6 +6,7 @@ import (
 	"github.com/DSiSc/wallet/accounts"
 	"github.com/DSiSc/wallet/accounts/keystore"
 	"github.com/DSiSc/wallet/common"
+	"github.com/urfave/cli"
 	"io"
 	"io/ioutil"
 	"os"
@@ -13,11 +14,10 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
-	"github.com/urfave/cli"
 )
 
 // NewApp creates an app with sane defaults.
-var app  *cli.App = nil
+var app *cli.App = nil
 
 func NewApp(gitCommit, usage string) *cli.App {
 	if app != nil {
@@ -58,7 +58,6 @@ var (
 	}
 )
 
-
 // MakeAddress converts an account specified directly as a hex encoded string or
 // a key index in the key store to an internal account representation.
 func MakeAddress(ks *keystore.KeyStore, account string) (accounts.Account, error) {
@@ -83,7 +82,6 @@ func MakeAddress(ks *keystore.KeyStore, account string) (accounts.Account, error
 	}
 	return accs[index], nil
 }
-
 
 // MakePasswordList reads password lines from the file specified by the global --password flag.
 func MakePasswordList(ctx *cli.Context) []string {

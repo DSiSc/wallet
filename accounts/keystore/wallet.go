@@ -18,8 +18,8 @@ package keystore
 
 import (
 	"github.com/DSiSc/craft/types"
-	"github.com/DSiSc/wallet/common"
 	"github.com/DSiSc/wallet/accounts"
+	"github.com/DSiSc/wallet/common"
 	"math/big"
 )
 

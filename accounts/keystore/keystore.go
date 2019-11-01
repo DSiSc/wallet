@@ -62,7 +62,7 @@ type KeyStore struct {
 	changes  chan struct{}                // Channel receiving change notifications from the cache
 	unlocked map[common.Address]*unlocked // Currently unlocked account (decrypted private keys)
 
-	wallets     []accounts.Wallet       // Wallet wrappers around the individual key files
+	wallets []accounts.Wallet // Wallet wrappers around the individual key files
 
 	mu sync.RWMutex
 }
@@ -212,8 +212,6 @@ func (ks *KeyStore) SignTx(a accounts.Account, tx *types.Transaction, chainID *b
 	ks.mu.RLock()
 	defer ks.mu.RUnlock()
 
-
-
 	unlockedKey, found := ks.unlocked[a.Address]
 	if !found {
 		return nil, ErrLocked
@@ -234,7 +232,6 @@ func (ks *KeyStore) SignHashWithPassphrase(a accounts.Account, passphrase string
 	defer zeroKey(key.PrivateKey)
 	return crypto.Sign(hash, key.PrivateKey)
 }
-
 
 // SignTxWithPassphrase signs the transaction if the private key matching the
 // given address can be decrypted with the given passphrase.
@@ -426,4 +423,3 @@ func zeroKey(k *ecdsa.PrivateKey) {
 		b[i] = 0
 	}
 }
-

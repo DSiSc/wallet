@@ -11,7 +11,6 @@ const (
 	veryLightScryptP = 1
 )
 
-
 // Tests that a json key file can be decrypted and encrypted in multiple rounds.
 func TestKeyEncryptDecrypt(t *testing.T) {
 	keyjson, err := ioutil.ReadFile("testdata/very-light-scrypt.json")

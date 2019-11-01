@@ -105,11 +105,11 @@ func WithSignature(tx *types.Transaction, signer Signer, sig []byte) (*types.Tra
 }
 
 // EncodeRLP implements rlp.Encoder
-func EncodeRLP(tx *types.Transaction,w io.Writer) error {
+func EncodeRLP(tx *types.Transaction, w io.Writer) error {
 	return rlp.Encode(w, tx.Data)
 }
 
 // EncodeToBytes returns the RLP encoding of val.
-func EncodeToRLP(tx *types.Transaction) ([]byte, error){
+func EncodeToRLP(tx *types.Transaction) ([]byte, error) {
 	return rlp.EncodeToBytes(tx)
 }

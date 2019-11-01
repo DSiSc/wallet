@@ -9,8 +9,6 @@ import (
 	"testing"
 )
 
-
-
 func tmpdir(t *testing.T) string {
 	dir, err := ioutil.TempDir("", "geth-test")
 	if err != nil {

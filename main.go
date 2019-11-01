@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/DSiSc/wallet/utils"
 	"github.com/DSiSc/wallet/cmd"
+	"github.com/DSiSc/wallet/utils"
 	"github.com/urfave/cli"
 	"os"
 	"sort"
@@ -22,18 +22,16 @@ var (
 		utils.LightKDFFlag,
 	}
 
-	rpcFlags = []cli.Flag{ }
-	whisperFlags = []cli.Flag{ }
-	metricsFlags = []cli.Flag{ }
-
+	rpcFlags     = []cli.Flag{}
+	whisperFlags = []cli.Flag{}
+	metricsFlags = []cli.Flag{}
 )
-
 
 func init() {
 	app.Action = wallet
 	app.HideVersion = true
 	app.Copyright = "Copyright 2018-2023 The justitia Authors"
-	app.Commands = []cli.Command {
+	app.Commands = []cli.Command{
 		cmd.AccountCommand,
 	}
 
@@ -63,5 +61,3 @@ func wallet(ctx *cli.Context) error {
 	fmt.Print("***wallet()")
 	return nil
 }
-
-

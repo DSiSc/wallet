@@ -25,9 +25,9 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/DSiSc/craft/types"
 	"github.com/DSiSc/crypto-suite/crypto/sha3"
 	"github.com/DSiSc/wallet/common/hexutil"
-	"github.com/DSiSc/craft/types"
 )
 
 // Lengths of hashes and addresses in bytes.

@@ -1,9 +1,9 @@
 package keystore
 
 import (
-crand "crypto/rand"
-"github.com/stretchr/testify/assert"
-"testing"
+	crand "crypto/rand"
+	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestKey_NewKeyForDirectICAP(t *testing.T) {

@@ -7,6 +7,7 @@ import (
 	"github.com/DSiSc/monkey"
 	"github.com/DSiSc/wallet/accounts"
 	ctypes "github.com/DSiSc/wallet/core/types"
+	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"math/big"
 	"os"
@@ -14,7 +15,6 @@ import (
 	"strings"
 	"testing"
 	"time"
-	"github.com/stretchr/testify/assert"
 )
 
 var testSigData = make([]byte, 32)
@@ -75,7 +75,7 @@ func TestSignTx(t *testing.T) {
 	dir, ks := tmpKeyStore(t, true)
 	defer os.RemoveAll(dir)
 
-	monkey.Patch(ctypes.SignTx, func(tx *types.Transaction, s ctypes.Signer, prv *ecdsa.PrivateKey)(*types.Transaction, error) {
+	monkey.Patch(ctypes.SignTx, func(tx *types.Transaction, s ctypes.Signer, prv *ecdsa.PrivateKey) (*types.Transaction, error) {
 		return &types.Transaction{}, nil
 	})
 
@@ -245,7 +245,7 @@ func TestSignTxWithPassphrase(t *testing.T) {
 	}
 
 	if _, err := ks.SignTxWithPassphrase(accounts.Account{Address: a1.Address},
-			"", &types.Transaction{}, big.NewInt(10)); err != nil {
+		"", &types.Transaction{}, big.NewInt(10)); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -280,15 +280,14 @@ func TestExport(t *testing.T) {
 
 	pass := ""
 	acc, err := ks.NewAccount(pass)
-	assert.Equal(t,nil, err)
+	assert.Equal(t, nil, err)
 
 	jsonBytes, err1 := ks.Export(acc, pass, pass)
-	assert.Equal(t,nil, err1)
+	assert.Equal(t, nil, err1)
 
 	acc1, err2 := ks.Import(jsonBytes, pass, pass)
 	assert.Equal(t, nil, err2)
 	assert.Equal(t, acc.Address, acc1.Address)
-
 
 }
 
@@ -330,7 +329,7 @@ func tmpKeyStore(t *testing.T, encrypted bool) (string, *KeyStore) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	new := func(kd string) *KeyStore { return nil}
+	new := func(kd string) *KeyStore { return nil }
 	if encrypted {
 		new = func(kd string) *KeyStore { return NewKeyStore(kd, veryLightScryptN, veryLightScryptP) }
 	}

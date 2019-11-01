@@ -117,8 +117,6 @@ func (am *Manager) Find(account Account) (Wallet, error) {
 	return nil, ErrUnknownAccount
 }
 
-
-
 // merge is a sorted analogue of append for wallets, where the ordering of the
 // origin list is preserved by inserting new wallets at the correct position.
 //
@@ -148,4 +146,3 @@ func drop(slice []Wallet, wallets ...Wallet) []Wallet {
 	}
 	return slice
 }
-

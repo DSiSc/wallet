@@ -11,7 +11,6 @@ import (
 )
 
 var (
-
 	AccountCommand = cli.Command{
 		Name:     "account",
 		Usage:    "Manage accounts",
@@ -42,15 +41,15 @@ account, create a new account or update an existing account.`,
 				Description: `geth account new`,
 			},
 			{
-				Name:         "update",
-				Usage:        "Update an existing account",
+				Name:   "update",
+				Usage:  "Update an existing account",
 				Action: utils.MigrateFlags(accountUpdate),
 				Flags: []cli.Flag{
 					utils.DataDirFlag,
 					utils.KeyStoreDirFlag,
 					utils.LightKDFFlag,
 				},
-				Description:  `Update an existing account`,
+				Description: `Update an existing account`,
 			},
 			{
 				Name:   "import",
@@ -75,7 +74,7 @@ func AccountList(ctx *cli.Context) error {
 	dataDir := ctx.GlobalString(utils.DataDirFlag.Name)
 	keyStoreDir := ctx.GlobalString(utils.KeyStoreDirFlag.Name)
 	if keyStoreDir == "" {
-		keyStoreDir =  keystore.KeyStoreScheme
+		keyStoreDir = keystore.KeyStoreScheme
 	}
 	keyStoreDir = filepath.Join(dataDir, keyStoreDir)
 
@@ -105,7 +104,7 @@ func unlockAccount(ctx *cli.Context, ks *keystore.KeyStore, address string, i in
 		password := getPassPhrase(prompt, false, i, passwords)
 		err = ks.Unlock(account, password)
 		if err == nil {
-	    	//temp	log.Info("Unlocked account", "address", account.Address.Hex())
+			//temp	log.Info("Unlocked account", "address", account.Address.Hex())
 			return account, password
 		}
 		if err, ok := err.(*keystore.AmbiguousAddrError); ok {
@@ -149,7 +148,6 @@ func ambiguousAddrRecovery(ks *keystore.KeyStore, err *keystore.AmbiguousAddrErr
 	return *match
 }
 
-
 // accountCreate creates a new account into the keystore defined by the CLI flags.
 func accountCreate(ctx *cli.Context) error {
 
@@ -157,7 +155,7 @@ func accountCreate(ctx *cli.Context) error {
 	//get keyStoreDir from KeyStoreDirFlag, if not use the default value
 	keyStoreDir := ctx.GlobalString(utils.KeyStoreDirFlag.Name)
 	if keyStoreDir == "" {
-		keyStoreDir =  keystore.KeyStoreScheme
+		keyStoreDir = keystore.KeyStoreScheme
 	}
 	keyStoreDir = filepath.Join(dataDir, keyStoreDir)
 	password := getPassPhrase("Your new account is locked with a password. Please give a password. Do not forget this password.", true, 0, utils.MakePasswordList(ctx))
@@ -174,7 +172,7 @@ func accountUpdate(ctx *cli.Context) error {
 	dataDir := ctx.GlobalString(utils.DataDirFlag.Name)
 	keyStoreDir := ctx.GlobalString(utils.KeyStoreDirFlag.Name)
 	if keyStoreDir == "" {
-		keyStoreDir =  keystore.KeyStoreScheme
+		keyStoreDir = keystore.KeyStoreScheme
 	}
 	keyStoreDir = filepath.Join(dataDir, keyStoreDir)
 
@@ -241,7 +239,7 @@ func accountImport(ctx *cli.Context) error {
 	dataDir := ctx.GlobalString(utils.DataDirFlag.Name)
 	keyStoreDir := ctx.GlobalString(utils.KeyStoreDirFlag.Name)
 	if keyStoreDir == "" {
-		keyStoreDir =  keystore.KeyStoreScheme
+		keyStoreDir = keystore.KeyStoreScheme
 	}
 	keyStoreDir = filepath.Join(dataDir, keyStoreDir)
 
@@ -256,5 +254,3 @@ func accountImport(ctx *cli.Context) error {
 	fmt.Printf("Address: {%x}\n", acct.Address)
 	return nil
 }
-
-

@@ -31,7 +31,6 @@ import (
 
 	mapset "github.com/deckarep/golang-set"
 	//temp"github.com/DSiSc/craft/log"
-
 )
 
 // Minimum amount of time between cache reloads. This limit applies if the platform does
@@ -235,7 +234,7 @@ func (ac *accountCache) scanAccounts() error {
 	// Scan the entire folder metadata for file changes
 	creates, deletes, updates, err := ac.fileC.scan(ac.keydir)
 	if err != nil {
-	//temp	log.Debug("Failed to reload keystore contents", "err", err)
+		//temp	log.Debug("Failed to reload keystore contents", "err", err)
 		return err
 	}
 	if creates.Cardinality() == 0 && deletes.Cardinality() == 0 && updates.Cardinality() == 0 {
@@ -245,13 +244,13 @@ func (ac *accountCache) scanAccounts() error {
 	var (
 		buf = new(bufio.Reader)
 		key struct {
-			   Address string `json:"address"`
-		   }
+			Address string `json:"address"`
+		}
 	)
 	readAccount := func(path string) *accounts.Account {
 		fd, err := os.Open(path)
 		if err != nil {
-	//temp		log.Info("Failed to open keystore file", "path", path, "err", err)
+			//temp		log.Info("Failed to open keystore file", "path", path, "err", err)
 			return nil
 		}
 		defer fd.Close()
@@ -262,9 +261,9 @@ func (ac *accountCache) scanAccounts() error {
 		addr := common.HexToAddress(key.Address)
 		switch {
 		case err != nil:
-	//temp		log.Debug("Failed to decode keystore key", "path", path, "err", err)
+			//temp		log.Debug("Failed to decode keystore key", "path", path, "err", err)
 		case (addr == common.Address{}):
-	//temp		log.Debug("Failed to decode keystore key", "path", path, "err", "missing or zero address")
+			//temp		log.Debug("Failed to decode keystore key", "path", path, "err", "missing or zero address")
 		default:
 			return &accounts.Account{
 				Address: addr,
@@ -297,6 +296,6 @@ func (ac *accountCache) scanAccounts() error {
 	case ac.notify <- struct{}{}:
 	default:
 	}
-//temp	log.Info("Handled keystore changes", "time", end.Sub(start))
+	//temp	log.Info("Handled keystore changes", "time", end.Sub(start))
 	return nil
 }

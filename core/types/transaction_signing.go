@@ -69,11 +69,10 @@ func SignTx(tx *types.Transaction, s Signer, prv *ecdsa.PrivateKey) (*types.Tran
 func DefaultTestKey() (*ecdsa.PrivateKey, common.Address) {
 	key, _ := crypto.HexToECDSA("45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8")
 	tempaddr := crypto.PubkeyToAddress(key.PublicKey)
-    addr := common.BytesToAddress(tempaddr[:])
-    
+	addr := common.BytesToAddress(tempaddr[:])
+
 	return key, addr
 }
-
 
 // Sender returns the address derived from the signature (V, R, S) using secp256k1
 // elliptic curve and an error if it failed deriving or upon an incorrect

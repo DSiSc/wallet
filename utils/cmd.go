@@ -21,9 +21,6 @@ import (
 	"strconv"
 )
 
-
-
-
 func statusOK(code int) bool { return code >= 200 && code <= 299 }
 
 func AccountConfig(keystoreDir string) (int, int, string, error) {
@@ -130,13 +127,12 @@ func SignTxByDir(address string, tx *types.Transaction, chainID *big.Int, keysto
 	return ks.SignTx(account, tx, chainID)
 }
 
-
 func GetUnlockedKey(address string, passphrase string) (accounts.Account, *keystore.Key, error) {
 	keyStoreDir := keystore.KeyStoreScheme
 	return GetUnlockedKeyByDir(address, passphrase, keyStoreDir)
 }
 
-func GetUnlockedKeyByDir(address string, passphrase string, keystoreDir string) (accounts.Account, *keystore.Key, error){
+func GetUnlockedKeyByDir(address string, passphrase string, keystoreDir string) (accounts.Account, *keystore.Key, error) {
 	scryptN, scryptP, keydir, err := AccountConfig(keystoreDir)
 	if err != nil {
 		fmt.Printf("Failed to read configuration: %v", err)
@@ -157,14 +153,12 @@ func GetUnlockedKeyByDir(address string, passphrase string, keystoreDir string) 
 	return ac, key, err
 }
 
-
-
 //Send a signed transaction
 func SendTransaction(tx *types.Transaction) (common.Hash, error) {
 	//format 0x string
 	from := fmt.Sprintf("0x%x", *(tx.Data.From))
 	to := from
-	gas := "0x" + strconv.FormatInt(int64(tx.Data.GasLimit),16)
+	gas := "0x" + strconv.FormatInt(int64(tx.Data.GasLimit), 16)
 	gasprice := "0x" + tx.Data.Price.String()
 	value := "0x" + tx.Data.Amount.String()
 	data := ""
@@ -243,7 +237,7 @@ func SendRawTransactionWeb3(web *web3.Web3, txBytesStr string) (common.Hash, err
 	return common.Hash(hash), err
 }
 
-func NewWeb3(hostname string, port string, verbose bool) (*web3.Web3, error){
+func NewWeb3(hostname string, port string, verbose bool) (*web3.Web3, error) {
 	if verbose {
 		fmt.Printf("Connect to %s:%s\n", hostname, port)
 	}
@@ -258,7 +252,7 @@ func NewAccount(keyStoreDir string, password string) (common.Address, error) {
 	if keyStoreDir == "" {
 		dataDir := "./"
 		if keyStoreDir == "" {
-			keyStoreDir =  keystore.KeyStoreScheme
+			keyStoreDir = keystore.KeyStoreScheme
 		}
 		keyStoreDir = filepath.Join(dataDir, keyStoreDir)
 	}
@@ -291,12 +285,12 @@ func Lock(ks *keystore.KeyStore, addr string) error {
 	return ks.Lock(common.Address(address))
 }
 
-func ListAccounts(keyStoreDir string) (error){
+func ListAccounts(keyStoreDir string) error {
 	var index int
 	if keyStoreDir == "" {
 		dataDir := "./"
 		if keyStoreDir == "" {
-			keyStoreDir =  keystore.KeyStoreScheme
+			keyStoreDir = keystore.KeyStoreScheme
 		}
 		keyStoreDir = filepath.Join(dataDir, keyStoreDir)
 	}

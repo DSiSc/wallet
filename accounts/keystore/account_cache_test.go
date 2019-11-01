@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"github.com/DSiSc/wallet/accounts"
 	"github.com/DSiSc/wallet/common"
+	"github.com/cespare/cp"
+	"github.com/davecgh/go-spew/spew"
 	"math/rand"
 	"os"
 	"path/filepath"
 	"reflect"
 	"testing"
 	"time"
-	"github.com/cespare/cp"
-	"github.com/davecgh/go-spew/spew"
 )
 
 var (
@@ -33,7 +33,6 @@ var (
 			Address: common.HexToAddress("289d485d9771714cce91d3393d764e1311907acc"),
 			URL:     accounts.URL{Scheme: KeyStoreScheme, Path: filepath.Join(cachetestDir, "zzz")},
 		},
-
 	}
 )
 
@@ -76,7 +75,6 @@ func TestWatchNewFile(t *testing.T) {
 	}
 	t.Errorf("got %s, want %s", spew.Sdump(list), spew.Sdump(wantAccounts))
 }
-
 
 func TestWatchNoDir(t *testing.T) {
 	t.Parallel()
